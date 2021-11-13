@@ -1,0 +1,3 @@
+import B
+
+B.b()
