@@ -9,6 +9,8 @@ python = "^3.8"
 "discord.py" = {git = "https://github.com/IAmTomahawkx/enhanced-discord.py", branch = "downstream-2.0"}
 doc-search = {git = "https://github.com/Tom-the-Bomb/doc-search"}
 jishaku = {git = "https://github.com/Gorialis/jishaku"}
+discord-ext-menus = {git = "https://github.com/Rapptz/discord-ext-menus"}
+discord-ext-menus-views = {git = "https://github.com/proguy914629bot/discord-ext-menus-views"}
 Flask = "^2.0.2"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
