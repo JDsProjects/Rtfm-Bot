@@ -17,7 +17,7 @@ class DevTools(commands.Cog):
   async def rtfm_lookup(self, program = None, *, args = None):
     
     cur = await self.bot.sus_users.cursor()
-    cursor=await cur.execute("SELECT * FROM RTFM_DICTIONARY")
+    cursor = await cur.execute("SELECT * FROM RTFM_DICTIONARY")
     rtfm_dictionary = dict(await cursor.fetchall())
     await cur.close()
 
