@@ -12,6 +12,8 @@ jishaku = {git = "https://github.com/Gorialis/jishaku"}
 discord-ext-menus = {git = "https://github.com/Rapptz/discord-ext-menus"}
 discord-ext-menus-views = {git = "https://github.com/proguy914629bot/discord-ext-menus-views"}
 Flask = "^2.0.2"
+aiosqlite = "^0.17.0"
+beautifulsoup4 = "^4.10.0"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

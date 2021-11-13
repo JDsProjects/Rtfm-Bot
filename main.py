@@ -1,5 +1,5 @@
 import B
-import discord, re, aiohttp, os, traceback, logging
+import discord, re, aiohttp, os, traceback, logging, aiosqlite
 from discord.ext import commands
 
 async def get_prefix(client, message):
@@ -18,10 +18,12 @@ class SMG4Bot(commands.Bot):
 
   async def start(self, *args, **kwargs):
     self.session = aiohttp.ClientSession()
+    self.sus_users = await aiosqlite.connect('sus_users.db')
     await super().start(*args, **kwargs)
 
   async def close(self):
     await self.session.close()
+    await self.sus_users.close()
     await super().close() 
 
 bot = SMG4Bot(command_prefix = (get_prefix),intents = discord.Intents.all())
@@ -35,4 +37,5 @@ for filename in os.listdir('./cogs'):
 
 logging.basicConfig(level = logging.INFO)
 B.b()
+
 bot.run(os.environ["TOKEN"])
