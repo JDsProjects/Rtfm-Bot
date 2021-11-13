@@ -2,6 +2,7 @@ from discord.ext import commands, menus
 from doc_search import AsyncScraper
 import discord, random
 import utils
+from discord.ext.menus.views import ViewMenuPages
 
 class DevTools(commands.Cog):
   def __init__(self, bot):
@@ -55,7 +56,28 @@ class DevTools(commands.Cog):
     results = await self.rtfm_lookup(program="latest", args = args)
     await self.rtfm_send(ctx, results)
 
-  
+
+  class RtfmEmbed(menus.ListPageSource):
+    async def format_page(self, menu, item):
+      embed = discord.Embed(title="Packages:", description=item, color = random.randint(0, 16777215))
+      return embed
+
+  @commands.command(brief = "a command to view the rtfm DB")
+  async def rtfm_view(self, ctx):
+    cur = await self.bot.sus_users.cursor()
+    cursor=await cur.execute("SELECT * FROM RTFM_DICTIONARY")
+    rtfm_dictionary = dict(await cursor.fetchall())
+    await cur.close()
+
+    pag = commands.Paginator()
+    for g in rtfm_dictionary:
+      pag.add_line(f"{g} : {rtfm_dictionary.get(g)}")
+    pages = [page.strip("`") for page in pag.pages]
+
+    menu = ViewMenuPages(self.RtfmEmbed(pages, per_page=1),delete_message_after=True)
+    await menu.start(ctx)
+
+  #from https://github.com/JDJGInc/JDBot/blob/master/cogs/info.py#L317
 
 def setup(bot):
   bot.add_cog(DevTools(bot))
