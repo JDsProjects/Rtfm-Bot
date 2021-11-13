@@ -1,5 +1,5 @@
 import B
-import discord, re, aiohttp
+import discord, re, aiohttp, os, traceback
 from discord.ext import commands
 
 async def get_prefix(client, message):
@@ -26,6 +26,12 @@ class SMG4Bot(commands.Bot):
 
 bot = SMG4Bot(command_prefix = (get_prefix),intents = discord.Intents.all())
 
-bot.load_extension('jishaku')
+for filename in os.listdir('./cogs'):
+  if filename.endswith('.py'):
+    try:
+      bot.load_extension(f'cogs.{filename[:-3]}')
+    except commands.errors.ExtensionError:
+      traceback.print_exc()
+
 
 B.b()
