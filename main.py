@@ -1,5 +1,5 @@
 import B
-import discord, re, aiohttp, os, traceback
+import discord, re, aiohttp, os, traceback, logging
 from discord.ext import commands
 
 async def get_prefix(client, message):
@@ -33,5 +33,6 @@ for filename in os.listdir('./cogs'):
     except commands.errors.ExtensionError:
       traceback.print_exc()
 
-
+logging.basicConfig(level = logging.INFO)
 B.b()
+bot.run(os.environ["TOKEN"])
