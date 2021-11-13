@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "smg4testing"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+"discord.py" = {git = "https://github.com/IAmTomahawkx/enhanced-discord.py", branch = "downstream-2.0"}
+doc-search = {git = "https://github.com/Tom-the-Bomb/doc-search"}
+jishaku = {git = "https://github.com/Gorialis/jishaku"}
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
