@@ -31,7 +31,23 @@ class SMG4Bot(commands.Bot):
 
 bot = SMG4Bot(command_prefix = (get_prefix),intents = discord.Intents.all())
 
-client = discord.Client(intents = discord.Intents.all())
+class MinimalSMG4Bot(discord.Client):
+  async def start(self, *args, **kwargs):
+    self.session = aiohttp.ClientSession()
+    self.sus_users = await aiosqlite.connect('sus_users.db')
+    cur = await self.sus_users.cursor()
+    cursor=await cur.execute("SELECT * FROM RTFM_DICTIONARY")
+    self.rtfm_libraries = dict(await cursor.fetchall())
+    self.scraper = doc_search.AsyncScraper(session = self.session)
+    await super().start(*args, **kwargs)
+
+  async def close(self):
+    await self.session.close()
+    await self.sus_users.close()
+    await super().close() 
+
+
+client = MinimalSMG4Bot(intents = discord.Intents.all())
 
 for filename in os.listdir('./cogs'):
   if filename.endswith('.py'):
