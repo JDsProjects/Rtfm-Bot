@@ -1,5 +1,4 @@
 from discord.ext import commands, menus
-from doc_search import AsyncScraper
 import discord, random
 import utils
 from discord.ext.menus.views import ViewMenuPages
@@ -7,12 +6,6 @@ from discord.ext.menus.views import ViewMenuPages
 class DevTools(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
-    bot.loop.create_task(self.__ainit__())
-  
-  async def __ainit__(self):
-    await self.bot.wait_until_ready()
-
-    self.scraper = AsyncScraper(session = self.bot.session)
   
   async def rtfm_lookup(self, program = None, *, args = None):
     
@@ -27,7 +20,7 @@ class DevTools(commands.Cog):
     else:
       url = rtfm_dictionary.get(program)
 
-      results = await self.scraper.search(args, page=url)
+      results = await self.bot.scraper.search(args, page=url)
 
       if not results:
         return f"Could not find anything with {args}."

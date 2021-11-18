@@ -1,4 +1,4 @@
-import discord, re, aiohttp, os, traceback, logging, aiosqlite
+import discord, re, aiohttp, os, traceback, logging, aiosqlite, doc_search
 from discord.ext import commands
 
 async def get_prefix(client, message):
@@ -21,6 +21,7 @@ class SMG4Bot(commands.Bot):
     cur = await self.sus_users.cursor()
     cursor=await cur.execute("SELECT * FROM RTFM_DICTIONARY")
     self.rtfm_libraries = dict(await cursor.fetchall())
+    self.scraper = doc_search.AsyncScraper(session = self.session)
     await super().start(*args, **kwargs)
 
   async def close(self):
