@@ -32,6 +32,9 @@ class SMG4Bot(commands.Bot):
 bot = SMG4Bot(command_prefix = (get_prefix),intents = discord.Intents.all())
 
 class MinimalSMG4Bot(discord.Client):
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    
   async def start(self, *args, **kwargs):
     self.session = aiohttp.ClientSession()
     self.sus_users = await aiosqlite.connect('sus_users.db')
@@ -46,8 +49,14 @@ class MinimalSMG4Bot(discord.Client):
     await self.sus_users.close()
     await super().close() 
 
-
 client = MinimalSMG4Bot(intents = discord.Intents.all())
+
+@bot.event
+async def on_error(event, *args, **kwargs):
+  more_information = os.sys.exc_info()
+  error_wanted = traceback.format_exc()
+  traceback.print_exc()
+  #print(more_information[0])
 
 for filename in os.listdir('./cogs'):
   if filename.endswith('.py'):

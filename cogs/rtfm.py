@@ -8,7 +8,6 @@ class DevTools(commands.Cog):
     self.bot = bot
   
   async def rtfm_lookup(self, program = None, *, args = None):
-    
     cur = await self.bot.sus_users.cursor()
     cursor = await cur.execute("SELECT * FROM RTFM_DICTIONARY")
     rtfm_dictionary = dict(await cursor.fetchall())
@@ -48,7 +47,6 @@ class DevTools(commands.Cog):
     await ctx.trigger_typing()
     results = await self.rtfm_lookup(program="latest", args = args)
     await self.rtfm_send(ctx, results)
-
 
   class RtfmEmbed(menus.ListPageSource):
     async def format_page(self, menu, item):

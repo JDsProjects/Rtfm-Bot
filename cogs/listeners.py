@@ -12,15 +12,6 @@ class Events(commands.Cog):
     print(f"Id: {self.bot.user.id}")
 
   @commands.Cog.listener()
-  async def on_error(event, *args, **kwargs):
-    import traceback
-    more_information=os.sys.exc_info()
-    error_wanted=traceback.format_exc()
-    traceback.print_exc()
-    
-    #print(more_information[0])
-
-  @commands.Cog.listener()
   async def on_guild_available(self, guild):
     print(f"{guild} is avaible")
 
