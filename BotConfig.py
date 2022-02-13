@@ -1,6 +1,8 @@
 import discord, re, aiohttp, os, traceback, logging, aiosqlite, doc_search
 from discord.ext import commands
 
+#swap to danny's asqlite, soon :)
+
 async def get_prefix(client, message):
   extras = ["smg4*", "smg*", "s*"]
   comp = re.compile("^(" + "|".join(map(re.escape, extras)) + ").*", flags = re.I)
