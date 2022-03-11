@@ -45,7 +45,7 @@ class test(commands.Cog):
         results = dict(results)
         print([app_commands.Choice(name=f"{result.lstrip(url)}", value=f"{results.get(result)}") for result in results])
 
-        return [app_commands.Choice(name=f"{result.lstrip}", value=f"{results.get(result)}") for result in results]
+        return [app_commands.Choice(name=f"{result}", value=f"{results.get(result)}") for result in results]
 
     @rtfm.error
     async def rtfm_error(self, interaction: discord.Interaction, command, error):
