@@ -36,7 +36,6 @@ class test(commands.Cog):
         url = namespace.__dict__.get("library", default)
 
         results = await self.bot.scraper.search(f"{current}", page=f"{url}")
-        print(type(results))
 
         if not results:
             results = {"Not Found", f"{current}."}
@@ -44,7 +43,7 @@ class test(commands.Cog):
         # results = results[:25]
         results = results[:10]
         results = dict(results)
-        print([app_commands.Choice(name=f"{result.lstrip(url)}", value=f"{results.get(result)}") for result in results])
+        print([app_commands.Choice(name=f"{result}", value=f"{results.get(result).lstrip(url)}") for result in results])
 
         return [app_commands.Choice(name=f"{result}", value=f"{results.get(result)}") for result in results]
 
