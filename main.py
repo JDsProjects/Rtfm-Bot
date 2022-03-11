@@ -38,7 +38,7 @@ class SMG4Bot(commands.Bot):
 
     async def close(self):
         await self.session.close()
-        await self.bot.close()
+        await self.db.close()
         await super().close()
 
 
