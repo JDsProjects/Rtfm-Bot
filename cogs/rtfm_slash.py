@@ -1,6 +1,7 @@
 import discord
 from discord import app_commands
 from discord.ext import commands
+import typing
 
 
 class test(commands.Cog):
@@ -8,7 +9,7 @@ class test(commands.Cog):
         self.bot = bot
 
     @app_commands.command(description="looks up docs")
-    async def rtfm(self, interaction: discord.Interaction, library: str, query: str):
+    async def rtfm(self, interaction: discord.Interaction, library: str, query: typing.Optional[str] = None):
         await interaction.response.send_message(f"Alright Let's see {library}")
 
     @rtfm.autocomplete("library")
