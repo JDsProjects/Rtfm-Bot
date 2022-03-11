@@ -25,8 +25,8 @@ class SMG4Bot(commands.Bot):
 
     async def start(self, *args, **kwargs):
         self.session = aiohttp.ClientSession()
-        self.sus_users = await asqlite.connect("sus_users.db")
-        cur = await self.sus_users.cursor()
+        self.db = await asqlite.connect("bot.db")
+        cur = await self.db.cursor()
         cursor = await cur.execute("SELECT * FROM RTFM_DICTIONARY")
         self.rtfm_libraries = dict(await cursor.fetchall())
         self.scraper = doc_search.AsyncScraper(session=self.session)
