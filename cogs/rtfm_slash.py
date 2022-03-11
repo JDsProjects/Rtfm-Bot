@@ -14,7 +14,7 @@ class test(commands.Cog):
         if query is None:
             return await interaction.response.send_message(f"Alright Let's see {library}")
 
-        await interaction.response.send_message(f"Alright Let's see {library}{query}")
+        await interaction.response.send_message(f"Alright Let's see {query}")
 
     @rtfm.autocomplete("library")
     async def rtfm_autocomplete(
