@@ -9,8 +9,9 @@ class test(commands.Cog):
         print(self.rtfm._params)
 
     @app_commands.command(description="looks up docs")
-    async def rtfm(interaction: discord.Interaction, library: str):
+    async def rtfm(self, interaction: discord.Interaction, library: str):
         await interaction.response.send_message(f"Alright Let's see {library}")
+
 
 def setup(bot):
     bot.add_cog(test(bot))
