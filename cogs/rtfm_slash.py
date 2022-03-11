@@ -12,20 +12,5 @@ class test(commands.Cog):
     async def rtfm(interaction: discord.Interaction, library: str):
         await interaction.response.send_message(f"Alright Let's see {library}")
 
-    @rtfm.autocomplete("library")
-    async def rtfm_autocomplete(
-        interaction: discord.Interaction, current: str, namespace: discord.AppCommandOptionType.string
-    ):
-        rtfm = interaction.client.rtfm_libraries
-
-        # return [
-        # app_commands.Choice(name=f"{library}", value=f"{rtfm.get(library)}")
-        # for library in rtfm
-        # if current.lower() in library.lower()
-        # ]
-
-        return [app_commands.Choice(name=fruit, value=fruit) for fruit in rtfm if current.lower() in fruit.lower()]
-
-
 def setup(bot):
     bot.add_cog(test(bot))
