@@ -11,7 +11,7 @@ class test(commands.Cog):
     async def rtfm(interaction: discord.Interaction, library: str):
         await interaction.response.send_message(f"Alright Let's see {library}")
 
-    @rtfm.autocomplete("rtfm")
+    @rtfm.autocomplete("library")
     async def rtfm_autocomplete(interaction: discord.Interaction, current: str, namespace: app_commands.Namespace):
         rtfm = interaction.client.rtfm_libraries
 
