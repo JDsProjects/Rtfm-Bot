@@ -49,6 +49,7 @@ class test(commands.Cog):
     @rtfm.error
     async def rtfm_error(self, interaction: discord.Interaction, command, error):
         print(error)
+        print(command)
 
 
 def setup(bot):
