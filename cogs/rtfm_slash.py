@@ -46,6 +46,10 @@ class test(commands.Cog):
 
         return [app_commands.Choice(name=f"{result}", value=f"{results.get(result)}") for result in results]
 
+    @rtfm.error
+    async def rtfm_error(self, interaction: discord.Interaction, command, error):
+        print(error)
+
 
 def setup(bot):
     bot.add_cog(test(bot))
