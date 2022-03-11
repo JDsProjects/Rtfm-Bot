@@ -73,8 +73,6 @@ class DevTools(commands.Cog):
         menu = ViewMenuPages(self.RtfmEmbed(pages, per_page=1), delete_message_after=True)
         await menu.start(ctx)
 
-    # from https://github.com/JDJGInc/JDBot/blob/master/cogs/info.py#L317
-
 
 def setup(bot):
     bot.add_cog(DevTools(bot))
