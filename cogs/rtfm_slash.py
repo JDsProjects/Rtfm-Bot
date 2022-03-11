@@ -32,7 +32,7 @@ class test(commands.Cog):
     async def rtfm_autocomplete(
         self, interaction: discord.Interaction, current: str, namespace: discord.AppCommandOptionType.string
     ):
-        default = interaction.client.rtfm_libraries.values()[0]
+        default = list(interaction.client.rtfm_libraries.values())[0]
         url = namespace.__dict__.get("library", default)
 
         results = await self.bot.scraper.search(f"{current}", page=f"{url}")
