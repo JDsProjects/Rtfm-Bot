@@ -8,8 +8,8 @@ class test(commands.Cog):
         self.bot = bot
 
     @app_commands.command()
-    async def rtfm(interaction: discord.Interaction, results: str):
-        await interaction.response.send_message(f"Alright Let's see {results}")
+    async def rtfm(interaction: discord.Interaction, library: str):
+        await interaction.response.send_message(f"Alright Let's see {library}")
 
     @rtfm.autocomplete("library")
     async def rtfm_autocomplete(interaction: discord.Interaction, current: str, namespace: app_commands.Namespace):
