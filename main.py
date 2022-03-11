@@ -33,7 +33,6 @@ class SMG4Bot(commands.Bot):
         cur = await self.db.cursor()
         cursor = await cur.execute("SELECT * FROM RTFM_DICTIONARY")
         self.rtfm_libraries = dict(await cursor.fetchall())
-        print(self.rtfm_libraries)
         self.scraper = doc_search.AsyncScraper(session=self.session)
         await super().start(*args, **kwargs)
 
