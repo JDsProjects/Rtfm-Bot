@@ -27,6 +27,8 @@ class test(commands.Cog):
             for library in rtfm
             if current.lower() in library.lower()
         ]
+        #if someone wants to attempt to support more than 25 libraries, this is where it would go, anyways.
+        #I think if someone really wants to do this, show up the first 25 libraries, if lookup show more up to 25 libraries.
 
     @rtfm.autocomplete("query")
     async def rtfm_autocomplete(
