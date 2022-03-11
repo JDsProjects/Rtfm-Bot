@@ -4,12 +4,6 @@ from discord.ext import commands
 import typing
 
 
-class Choice(discord.app_commands.Choice):
-    def __init(self, url, **kwargs):
-        self.url = url
-        super().__init__(**kwargs)
-
-
 class test(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -50,8 +44,9 @@ class test(commands.Cog):
         # results = results[:25]
         results = results[:10]
         results = dict(results)
+        print([app_commands.Choice(name=f"{result.lstrip(url)}", value=f"{results.get(result)}") for result in results])
 
-        return [Choice(url=f"{results.get(result)}", name=f"{result}") for result in results]
+        return [app_commands.Choice(name=f"{result}", value=f"{results.get(result)}") for result in results]
 
     @rtfm.error
     async def rtfm_error(self, interaction: discord.Interaction, command, error):
