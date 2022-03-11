@@ -7,6 +7,9 @@ import traceback
 import logging
 import doc_search
 from discord.ext import commands
+import dotenv
+
+dotenv.load_dotenv()
 
 
 async def get_prefix(client, message):

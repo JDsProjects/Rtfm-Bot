@@ -5,3 +5,4 @@ git+https://github.com/proguy914629bot/discord-ext-menus-views
 git+https://github.com/Tom-the-Bomb/doc-search
 git+https://github.com/Rapptz/asqlite/
 beautifulsoup4
+python-dotenv
