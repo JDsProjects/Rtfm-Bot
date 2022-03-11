@@ -9,12 +9,7 @@ class test(commands.Cog):
 
     @app_commands.command(description="looks up docs")
     async def rtfm(self, interaction: discord.Interaction, library: str):
-
-        rtfm = interaction.client.rtfm_libraries
-
-        choices = [app_commands.Choice(name=f"{library}", value=f"{rtfm.get(library)}") for library in rtfm]
-
-        await interaction.response.autocomplete(choices)
+        await interaction.response.send_message(f"Alright Let's see {library}")
 
     @rtfm.autocomplete("library")
     async def rtfm_autocomplete(
