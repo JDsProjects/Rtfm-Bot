@@ -35,6 +35,7 @@ class test(commands.Cog):
         url = namespace.__dict__["library"]
 
         results = await self.bot.scraper.search(f"{current}", page=f"{url}")
+        print(type(results))
 
         if not results:
             results = {"Not Found", f"{current}."}
