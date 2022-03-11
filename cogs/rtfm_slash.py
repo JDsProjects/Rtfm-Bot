@@ -6,7 +6,7 @@ from discord.ext import commands
 class test(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.rtfm._params
+        print(self.rtfm._params)
 
     @app_commands.command(description="looks up docs")
     async def rtfm(interaction: discord.Interaction, library: str):
