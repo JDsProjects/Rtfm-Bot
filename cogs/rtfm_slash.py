@@ -33,7 +33,6 @@ class test(commands.Cog):
         self, interaction: discord.Interaction, current: str, namespace: discord.AppCommandOptionType.string
     ):
         default = list(interaction.client.rtfm_libraries.values())[0]
-        print(default)
         url = namespace.__dict__.get("library", default)
 
         results = await self.bot.scraper.search(f"{current}", page=f"{url}")
