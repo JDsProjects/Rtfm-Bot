@@ -6,6 +6,7 @@ from discord.ext import commands
 class test(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.rtfm._params
 
     @app_commands.command(description="looks up docs")
     async def rtfm(interaction: discord.Interaction, library: str):
@@ -17,11 +18,13 @@ class test(commands.Cog):
     ):
         rtfm = interaction.client.rtfm_libraries
 
-        return [
-            app_commands.Choice(name=f"{library}", value=f"{rtfm.get(library)}")
-            for library in rtfm
-            if current.lower() in library.lower()
-        ]
+        # return [
+        # app_commands.Choice(name=f"{library}", value=f"{rtfm.get(library)}")
+        # for library in rtfm
+        # if current.lower() in library.lower()
+        # ]
+
+        return [app_commands.Choice(name=fruit, value=fruit) for fruit in rtfm if current.lower() in fruit.lower()]
 
 
 def setup(bot):
