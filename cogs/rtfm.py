@@ -17,6 +17,7 @@ class DevTools(commands.Cog):
             url = self.bot.rtfm_libraries.get(program)
 
             results = await self.bot.scraper.search(args, page=url)
+            print(results)
 
             if not results:
                 return f"Could not find anything with {args}."
