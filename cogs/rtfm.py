@@ -17,7 +17,6 @@ class DevTools(commands.Cog):
             url = self.bot.rtfm_libraries.get(program)
 
             results = await self.bot.scraper.search(args, page=url)
-            print(results)
 
             if not results:
                 return f"Could not find anything with {args}."
@@ -47,7 +46,7 @@ class DevTools(commands.Cog):
     async def rtfm(self, ctx, *, args=None):
 
         await ctx.trigger_typing()
-        results = await self.rtfm_lookup(program="latest", args=args)
+        results = await self.rtfm_lookup(program="dpy-latest", args=args)
         await self.rtfm_send(ctx, results)
 
     class RtfmEmbed(menus.ListPageSource):
