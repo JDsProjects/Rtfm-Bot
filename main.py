@@ -60,6 +60,16 @@ for filename in os.listdir("./cogs"):
         except commands.errors.ExtensionError:
             traceback.print_exc()
 
+
+async def startup():
+    await bot.wait_until_ready()
+    await bot.tree.sync()
+    print("Sucessfully synced applications commands")
+    print(f"Connected as {bot.user}")
+
+
+bot.loop.create_task(startup())
+
 logging.basicConfig(level=logging.INFO)
 
 bot.run(os.environ["TOKEN"])
