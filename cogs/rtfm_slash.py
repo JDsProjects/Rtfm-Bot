@@ -40,7 +40,8 @@ class test(commands.Cog):
         if not results:
             results = {"Not Found", f"{current}."}
 
-        results = results[:25]
+        # results = results[:25]
+        results = results[:10]
         results = dict(results)
         print(results)
 
