@@ -10,7 +10,11 @@ class test(commands.Cog):
 
     @app_commands.command(description="looks up docs")
     async def rtfm(self, interaction: discord.Interaction, library: str, query: typing.Optional[str] = None):
-        await interaction.response.send_message(f"Alright Let's see {library}")
+
+        if query is None:
+            return await interaction.response.send_message(f"Alright Let's see {library}")
+
+        await interaction.response.send_message(f"Alright Let's see {query}")
 
     @rtfm.autocomplete("library")
     async def rtfm_autocomplete(
@@ -29,6 +33,7 @@ class test(commands.Cog):
         self, interaction: discord.Interaction, current: str, namespace: discord.AppCommandOptionType.string
     ):
         rtfm = interaction.client.rtfm_libraries
+        print(namespace.__dict__.get("library"))
 
         return [
             app_commands.Choice(name=f"{library}", value=f"{rtfm.get(library)}")
