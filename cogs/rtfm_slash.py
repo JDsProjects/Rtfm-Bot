@@ -41,6 +41,7 @@ class test(commands.Cog):
 
         results = results[:25]
         results = dict(results)
+        print(results)
 
         return [app_commands.Choice(name=f"{result}", value=f"{results.get(result)}") for result in results]
 
