@@ -16,7 +16,7 @@ class test(commands.Cog):
         rtfm = interaction.client.rtfm_libraries
 
         return [
-            app_commands.Choice(name=f"{library}", value=f"{rtfm.get('library')}")
+            app_commands.Choice(name=f"{library}", value=f"{rtfm.get(library)}")
             for library in rtfm
             if current.lower() in library.lower()
         ]
