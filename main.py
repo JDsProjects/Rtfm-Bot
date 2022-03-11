@@ -8,6 +8,7 @@ import logging
 import doc_search
 from discord.ext import commands
 import dotenv
+import asqlite
 
 dotenv.load_dotenv()
 
