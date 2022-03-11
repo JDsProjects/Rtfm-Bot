@@ -37,7 +37,7 @@ class test(commands.Cog):
         results = await self.bot.scraper.search(f"{current}", page=f"{url}")
 
         if not results:
-            results = {"Not Found", f"Could not find anything with {current}."}
+            results = {"Not Found", f"{current}."}
 
         results = results[:25]
         results = dict(results)
