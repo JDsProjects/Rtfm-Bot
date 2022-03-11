@@ -32,14 +32,16 @@ class test(commands.Cog):
     async def rtfm_autocomplete(
         self, interaction: discord.Interaction, current: str, namespace: discord.AppCommandOptionType.string
     ):
-        rtfm = interaction.client.rtfm_libraries
-        print(namespace.__dict__.get("library"))
+        url = namespace.__dict__["library"]
 
-        return [
-            app_commands.Choice(name=f"{library}", value=f"{rtfm.get(library)}")
-            for library in rtfm
-            if current.lower() in library.lower()
-        ]
+        results = await self.bot.scraper.search(f"{current}", page=f"{url}")
+
+        if not results:
+            results = {"Not Found", f"Could not find anything with {current}."}
+
+        results = dict(results[:25])
+
+        return [app_commands.Choice(name=f"{result}", value=f"{results.get(result)}") for result in results]
 
 
 def setup(bot):
