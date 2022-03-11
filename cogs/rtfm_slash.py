@@ -40,8 +40,7 @@ class test(commands.Cog):
         if not results:
             results = {"Not Found", f"{current}."}
 
-        # results = results[:25]
-        results = results[:10]
+        results = results[:25]
         results = dict(results)
         return [app_commands.Choice(name=f"{result}", value=f"{results.get(result)}") for result in results]
         # we may need to do something with the results, to get it to actually work
