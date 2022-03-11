@@ -7,12 +7,14 @@ class test(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command()
+    @app_commands.command(description="looks up docs")
     async def rtfm(interaction: discord.Interaction, library: str):
         await interaction.response.send_message(f"Alright Let's see {library}")
 
     @rtfm.autocomplete("library")
-    async def rtfm_autocomplete(interaction: discord.Interaction, current: str, namespace: app_commands.Namespace):
+    async def rtfm_autocomplete(
+        interaction: discord.Interaction, current: str, namespace: discord.AppCommandOptionType.string
+    ):
         rtfm = interaction.client.rtfm_libraries
 
         return [
