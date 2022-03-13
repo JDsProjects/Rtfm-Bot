@@ -42,6 +42,7 @@ class SMG4Bot(commands.Bot):
         await super().close()
 
     async def setup_hook(self):
+        await self.wait_until_ready()
         await self.tree.sync()
         print("Sucessfully synced applications commands")
         print(f"Connected as {self.user}")
