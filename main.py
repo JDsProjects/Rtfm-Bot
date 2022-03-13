@@ -41,11 +41,6 @@ class SMG4Bot(commands.Bot):
         await self.db.close()
         await super().close()
 
-    async def setup_hook(self):
-        await self.tree.sync()
-        print("Sucessfully synced applications commands")
-        print(f"Connected as {self.user}")
-
 
 bot = SMG4Bot(command_prefix=(get_prefix), intents=discord.Intents.all())
 
@@ -64,6 +59,16 @@ for filename in os.listdir("./cogs"):
             bot.load_extension(f"cogs.{filename[:-3]}")
         except commands.errors.ExtensionError:
             traceback.print_exc()
+
+
+async def startup():
+    await bot.wait_until_ready()
+    await bot.tree.sync()
+    print("Sucessfully synced applications commands")
+    print(f"Connected as {bot.user}")
+
+
+bot.loop.create_task(startup())
 
 logging.basicConfig(level=logging.INFO)
 
