@@ -48,7 +48,6 @@ class test(commands.Cog):
         results = dict(results)
         cut_off = len(url)
         return [app_commands.Choice(name=f"{result}", value=f"{results.get(result)[cut_off:]}") for result in results]
-        # we may need to do something with the results, to get it to actually work
 
     @rtfm.error
     async def rtfm_error(self, interaction: discord.Interaction, command, error):
