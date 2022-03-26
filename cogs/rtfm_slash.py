@@ -51,6 +51,7 @@ class test(commands.Cog):
 
     @rtfm.error
     async def rtfm_error(self, interaction: discord.Interaction, command, error):
+        await interaction.response.send_message(f"{error}! Please Send to this to my developer", ephemeral=True)
         print(error)
         print(command)
 
