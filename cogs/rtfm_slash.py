@@ -37,7 +37,7 @@ class test(commands.Cog):
     ):
         namespace = interaction.namespace
         default = list(interaction.client.rtfm_libraries.values())[0]
-        url = namespace.__dict__.get("library", default)
+        url = namespace.library or default
 
         results = await self.bot.scraper.search(f"{current}", page=f"{url}")
 
