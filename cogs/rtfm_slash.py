@@ -18,7 +18,6 @@ class test(commands.Cog):
 
     @rtfm.autocomplete("library")
     async def rtfm_autocomplete(self, interaction: discord.Interaction, current: str):
-        namespace = interaction.namespace
         rtfm = interaction.client.rtfm_libraries
 
         return [
@@ -35,9 +34,8 @@ class test(commands.Cog):
         interaction: discord.Interaction,
         current: str,
     ):
-        namespace = interaction.namespace
         default = list(interaction.client.rtfm_libraries.values())[0]
-        url = namespace.library or default
+        url = interaction.namespace.library or default
 
         results = await self.bot.scraper.search(f"{current}", page=f"{url}")
 
