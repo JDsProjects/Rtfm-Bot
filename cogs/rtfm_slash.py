@@ -46,10 +46,8 @@ class test(commands.Cog):
 
         results = results[:25]
         results = dict(results)
-        library_len = len(url)
-        return [
-            app_commands.Choice(name=f"{result}", value=f"{results.get(result[library_len:])}") for result in results
-        ]
+        cut_off = len(url)
+        return [app_commands.Choice(name=f"{result}", value=f"{results.get(result)[cut_off:]}") for result in results]
         # we may need to do something with the results, to get it to actually work
 
     @rtfm.error
