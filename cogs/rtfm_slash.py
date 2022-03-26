@@ -14,7 +14,7 @@ class test(commands.Cog):
         if query is None:
             return await interaction.response.send_message(f"Alright Let's see {library}")
 
-        await interaction.response.send_message(f"Alright Let's see {query}")
+        await interaction.response.send_message(f"Alright Let's see {library}{query}")
 
     @rtfm.autocomplete("library")
     async def rtfm_autocomplete(self, interaction: discord.Interaction, current: str):
@@ -46,7 +46,10 @@ class test(commands.Cog):
 
         results = results[:25]
         results = dict(results)
-        return [app_commands.Choice(name=f"{result}", value=f"{results.get(result)}") for result in results]
+        library_len = len(url)
+        return [
+            app_commands.Choice(name=f"{result}", value=f"{results.get(result[library_len:])}") for result in results
+        ]
         # we may need to do something with the results, to get it to actually work
 
     @rtfm.error
