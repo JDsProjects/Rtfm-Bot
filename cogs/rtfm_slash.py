@@ -37,7 +37,7 @@ class test(commands.Cog):
         default = list(interaction.client.rtfm_libraries.values())[0]
         url = interaction.namespace.library or default
 
-        results = await self.bot.scraper.search(f"{current}", page=f"{url}")
+        results = await self.bot.scraper.search(current, page=url)
 
         if not results:
             results = {"Not Found", f"{current}."}
