@@ -17,9 +17,8 @@ class test(commands.Cog):
         await interaction.response.send_message(f"Alright Let's see {query}")
 
     @rtfm.autocomplete("library")
-    async def rtfm_autocomplete(
-        self, interaction: discord.Interaction, current: str, namespace: discord.AppCommandOptionType.string
-    ):
+    async def rtfm_autocomplete(self, interaction: discord.Interaction, current: str):
+        namespace = interaction.namepsace
         rtfm = interaction.client.rtfm_libraries
 
         return [
@@ -32,8 +31,11 @@ class test(commands.Cog):
 
     @rtfm.autocomplete("query")
     async def rtfm_autocomplete(
-        self, interaction: discord.Interaction, current: str, namespace: discord.AppCommandOptionType.string
+        self,
+        interaction: discord.Interaction,
+        current: str,
     ):
+        namespace = interaction.namespace
         default = list(interaction.client.rtfm_libraries.values())[0]
         url = namespace.__dict__.get("library", default)
 
