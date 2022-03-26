@@ -53,5 +53,5 @@ class test(commands.Cog):
         print(command)
 
 
-def setup(bot):
-    bot.add_cog(test(bot))
+async def setup(bot):
+    await bot.add_cog(test(bot))

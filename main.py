@@ -51,6 +51,13 @@ class SMG4Bot(commands.Bot):
     async def setup_hook(self):
         self.loop.create_task(startup(self))
 
+        for filename in os.listdir("./cogs"):
+            if filename.endswith(".py"):
+                try:
+                    await bot.load_extension(f"cogs.{filename[:-3]}")
+                except commands.errors.ExtensionError:
+                    traceback.print_exc()
+
 
 bot = SMG4Bot(command_prefix=(get_prefix), intents=discord.Intents.all())
 
@@ -62,13 +69,6 @@ async def on_error(event, *args, **kwargs):
     traceback.print_exc()
     # print(more_information[0])
 
-
-for filename in os.listdir("./cogs"):
-    if filename.endswith(".py"):
-        try:
-            bot.load_extension(f"cogs.{filename[:-3]}")
-        except commands.errors.ExtensionError:
-            traceback.print_exc()
 
 logging.basicConfig(level=logging.INFO)
 

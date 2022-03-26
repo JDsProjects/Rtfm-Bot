@@ -64,5 +64,5 @@ class DevTools(commands.Cog):
         await menu.start(ctx)
 
 
-def setup(bot):
-    bot.add_cog(DevTools(bot))
+async def setup(bot):
+    await bot.add_cog(DevTools(bot))

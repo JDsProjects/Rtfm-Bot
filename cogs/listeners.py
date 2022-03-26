@@ -21,5 +21,5 @@ class Events(commands.Cog):
         print(f"{guild} is unavaible")
 
 
-def setup(bot):
-    bot.add_cog(Events(bot))
+async def setup(bot):
+    await bot.add_cog(Events(bot))
