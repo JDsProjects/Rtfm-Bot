@@ -18,7 +18,7 @@ class test(commands.Cog):
 
     @rtfm.autocomplete("library")
     async def rtfm_autocomplete(self, interaction: discord.Interaction, current: str):
-        namespace = interaction.namepsace
+        namespace = interaction.namespace
         rtfm = interaction.client.rtfm_libraries
 
         return [
