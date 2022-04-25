@@ -21,6 +21,7 @@ class test(commands.Cog):
         rtfm = interaction.client.rtfm_libraries
 
         if not current:
+            len([app_commands.Choice(name=f"{library}", value=f"{rtfm.get(library)}") for library in rtfm][0:25])
             return [app_commands.Choice(name=f"{library}", value=f"{rtfm.get(library)}") for library in rtfm][0:25]
         return [
             app_commands.Choice(name=f"{library}", value=f"{rtfm.get(library)}")
