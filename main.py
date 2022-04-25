@@ -23,13 +23,6 @@ async def get_prefix(client, message):
     return commands.when_mentioned_or(*extras)(client, message)
 
 
-async def startup(self):
-    await self.wait_until_ready()
-    await self.tree.sync()
-    print("Sucessfully synced applications commands")
-    print(f"Connected as {self.user}")
-
-
 class SMG4Bot(commands.Bot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -49,7 +42,6 @@ class SMG4Bot(commands.Bot):
         await super().close()
 
     async def setup_hook(self):
-        self.loop.create_task(startup(self))
 
         for filename in os.listdir("./cogs"):
             if filename.endswith(".py"):
