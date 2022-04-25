@@ -14,7 +14,7 @@ dotenv.load_dotenv()
 
 
 async def get_prefix(client, message):
-    extras = ["smg4*", "smg*", "s*"]
+    extras = ["rtfm*", "rm*", "r*"]
     comp = re.compile("^(" + "|".join(map(re.escape, extras)) + ").*", flags=re.I)
     match = comp.match(message.content)
 
