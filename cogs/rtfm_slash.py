@@ -20,7 +20,8 @@ class test(commands.Cog):
     async def rtfm_autocomplete(self, interaction: discord.Interaction, current: str):
         rtfm = interaction.client.rtfm_libraries
 
-        print(current)
+        if not current:
+            return [app_commands.Choice(name=f"{library}", value=f"{rtfm.get(library)}") for library in rtfm][0:25]
         return [
             app_commands.Choice(name=f"{library}", value=f"{rtfm.get(library)}")
             for library in rtfm
