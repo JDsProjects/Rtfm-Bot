@@ -23,7 +23,7 @@ async def get_prefix(client, message):
     return commands.when_mentioned_or(*extras)(client, message)
 
 
-class SMG4Bot(commands.Bot):
+class Rtfm_Bot(commands.Bot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -51,7 +51,7 @@ class SMG4Bot(commands.Bot):
                     traceback.print_exc()
 
 
-bot = SMG4Bot(command_prefix=(get_prefix), intents=discord.Intents.all())
+bot = Rtfm_Bot(command_prefix=(get_prefix), intents=discord.Intents.all())
 
 
 @bot.event
