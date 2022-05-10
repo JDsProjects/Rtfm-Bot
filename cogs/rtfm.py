@@ -45,7 +45,7 @@ class DevTools(commands.Cog):
     )
     async def rtfm(self, ctx, *, args=None):
 
-        await ctx.trigger_typing()
+        await ctx.typing()
         results = await self.rtfm_lookup(program="dpy-latest", args=args)
         await self.rtfm_send(ctx, results)
 
