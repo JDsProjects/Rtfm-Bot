@@ -59,4 +59,4 @@ class RTFMSlash(commands.Cog):
 
 
 async def setup(bot: RTFMBot) -> None:
-    await bot.add_cog(RTFMSlash(bot), guild=Object(423828791098605578))
+    await bot.add_cog(RTFMSlash(bot))

@@ -6,6 +6,7 @@ if TYPE_CHECKING:
 else:
     RTFMBot = commands.Bot
 
+
 class Events(commands.Cog):
     def __init__(self, bot: RTFMBot) -> None:
         self.bot = bot
@@ -15,7 +16,7 @@ class Events(commands.Cog):
         print(
             "Bot is Ready",
             f"Logged in as {self.bot.user} (ID: {self.bot.user.id})",  # type: ignore # .user isn't None.
-            sep="\n"
+            sep="\n",
         )
 
     @commands.Cog.listener()
