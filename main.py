@@ -1,101 +1,67 @@
-from __future__ import annotations
-
-from typing import TYPE_CHECKING, Any, List, Optional, Pattern, Match, TypedDict
-
+import os
+import discord
+import re
+import aiohttp
+import os
 import traceback
 import logging
-
-from re import compile as re_compile, escape as re_escape, IGNORECASE
-from os import listdir, getenv as os_getenv
-
-from discord import Intents
+import doc_search
 from discord.ext import commands
+import dotenv
+import asqlite
 
-from dotenv import load_dotenv
-from aiohttp import ClientSession
-from doc_search import AsyncScraper
-from asqlite import connect as asqlite_connect
-
-if TYPE_CHECKING:
-    from typing_extensions import Self
-
-    from discord import Message
-    from discord.ext.commands.bot import PrefixType
-
-    from asqlite import Connection, Cursor
-    from sqlite3 import Row
-
-    class RTFMLibraryData(TypedDict):
-        name: str
-        link: str
+dotenv.load_dotenv()
 
 
-async def get_prefix(client: RTFMBot, message: Message) -> list[str]:
-    extras: list[str] = ["rtfm*", "rm*", "r*"]
-    comp: Pattern[str] = re_compile("^(" + "|".join(map(re_escape, extras)) + ").*", flags=IGNORECASE)
-    match: Optional[Match[str]] = comp.match(message.content)
+async def get_prefix(client, message):
+    extras = ["rtfm*", "rm*", "r*"]
+    comp = re.compile("^(" + "|".join(map(re.escape, extras)) + ").*", flags=re.I)
+    match = comp.match(message.content)
 
     if match is not None:
         extras.append(match.group(1))
-
     return commands.when_mentioned_or(*extras)(client, message)
 
 
-class RTFMBot(commands.Bot):
-    def __init__(self, *, command_prefix: PrefixType[Self], intents: Intents) -> None:
-        super().__init__(command_prefix=command_prefix, intents=intents)
+class Rtfm_Bot(commands.Bot):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-        # filled in by setup_hook
-        self.db: Optional[Connection] = None
-        self.session: Optional[ClientSession] = None
-        self.rtfm_libraries: dict[str, str] = {}
-        self.scraper: Optional[AsyncScraper] = None
+    async def start(self, *args, **kwargs):
+        self.session = aiohttp.ClientSession()
+        self.db = await asqlite.connect("bot.db")
+        cur = await self.db.cursor()
+        cursor = await cur.execute("SELECT * FROM RTFM_DICTIONARY")
+        self.rtfm_libraries = dict(await cursor.fetchall())
+        self.scraper = doc_search.AsyncScraper(session=self.session)
+        await super().start(*args, **kwargs)
 
-    async def setup_hook(self) -> None:
-        # load extensions
-        for filename in listdir("./cogs"):
-            if filename.endswith(".py") and not filename.startswith("_"):
+    async def close(self):
+        await self.session.close()
+        await self.db.close()
+        await super().close()
+
+    async def setup_hook(self):
+
+        for filename in os.listdir("./cogs"):
+            if filename.endswith(".py"):
                 try:
-                    await self.load_extension(f"cogs.{filename[:-3]}")
+                    await bot.load_extension(f"cogs.{filename[:-3]}")
                 except commands.errors.ExtensionError:
                     traceback.print_exc()
 
-        # initialize global aiohttp session
-        self.session = ClientSession()
 
-        # load rtfm libraries
-        self.db = await asqlite_connect("bot.db")
-        main_cursor: Cursor = await self.db.cursor()
-        result: Cursor = await main_cursor.execute("SELECT * FROM RTFM_DICTIONARY")
-
-        rtfm_libraries: list[Row[str]] = await result.fetchall()
-        self.rtfm_libraries = dict(rtfm_libraries)  # type: ignore # this is supported.
-
-        # initialize scraper
-        self.scraper = AsyncScraper(session=self.session)
-
-    async def close(self) -> None:
-        if self.session and not self.session.closed:
-            await self.session.close()
-        if self.db:
-            await self.db.close()
-        await super().close()
-
-
-bot = RTFMBot(command_prefix=get_prefix, intents=Intents(messages=True, message_content=True, guilds=True))
+bot = Rtfm_Bot(command_prefix=(get_prefix), intents=discord.Intents.all())
 
 
 @bot.event
-async def on_error(event: str, *args: Any, **kwargs: Any) -> None:
-    # from sys import exc_info as sys_exc_info
-    # more_information = sys_exc_info()
-    # error_wanted = traceback.format_exc()
-    # default behaviour:
+async def on_error(event, *args, **kwargs):
+    more_information = os.sys.exc_info()
+    error_wanted = traceback.format_exc()
     traceback.print_exc()
     # print(more_information[0])
 
 
 logging.basicConfig(level=logging.INFO)
 
-load_dotenv()
-bot.run(os_getenv("TOKEN"))
+bot.run(os.environ["TOKEN"])

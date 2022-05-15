@@ -1,5 +1,7 @@
 git+https://github.com/Gorialis/jishaku.git
 git+https://github.com/Rapptz/discord.py
+git+https://github.com/Rapptz/discord-ext-menus
+git+https://github.com/proguy914629bot/discord-ext-menus-views
 git+https://github.com/Tom-the-Bomb/doc-search
 git+https://github.com/Rapptz/asqlite/
 beautifulsoup4
