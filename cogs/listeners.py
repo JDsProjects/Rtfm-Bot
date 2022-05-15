@@ -1,31 +1,25 @@
-from typing import TYPE_CHECKING
 from discord.ext import commands
+import discord, random, os
 
-if TYPE_CHECKING:
-    from main import RTFMBot
-else:
-    RTFMBot = commands.Bot
 
 class Events(commands.Cog):
-    def __init__(self, bot: RTFMBot) -> None:
+    def __init__(self, bot):
         self.bot = bot
 
     @commands.Cog.listener()
-    async def on_ready(self) -> None:
-        print(
-            "Bot is Ready",
-            f"Logged in as {self.bot.user} (ID: {self.bot.user.id})",  # type: ignore # .user isn't None.
-            sep="\n"
-        )
+    async def on_ready(self):
+        print("Bot is Ready")
+        print(f"Logged in as {self.bot.user}")
+        print(f"Id: {self.bot.user.id}")
 
     @commands.Cog.listener()
-    async def on_guild_available(self, guild) -> None:
-        print(f"Guild {guild.name} (ID: {guild.id}) is available")
+    async def on_guild_available(self, guild):
+        print(f"{guild} is avaible")
 
     @commands.Cog.listener()
-    async def on_guild_unavailable(self, guild) -> None:
-        print(f"Guild {guild.name} (ID: {guild.id}) is unavailable")
+    async def on_guild_unavailable(self, guild):
+        print(f"{guild} is unavaible")
 
 
-async def setup(bot: RTFMBot) -> None:
+async def setup(bot):
     await bot.add_cog(Events(bot))
