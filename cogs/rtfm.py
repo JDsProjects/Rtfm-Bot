@@ -1,68 +1,69 @@
-from discord.ext import commands, menus
-import discord, random
-import utils
-from discord.ext.menus.views import ViewMenuPages
+from typing import TYPE_CHECKING, Any, Optional, Union
+from random import randint
+
+from discord import AllowedMentions, Embed
+from discord.ext import commands
+
+from utils.extra import RTFMEmbedPaginator, reference
+
+if TYPE_CHECKING:
+    from main import RTFMBot
+
+    from discord.ext.commands import Context
+else:
+    Context = Any
+    RTFMBot = commands.Bot
 
 
 class DevTools(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: RTFMBot) -> None:
         self.bot = bot
 
-    async def rtfm_lookup(self, program=None, *, args=None):
+    async def rtfm_lookup(self, program: str, *, library: Optional[str] = None) -> Union[dict[str, str], str]:
+        assert self.bot.scraper is not None
 
-        if not args:
-            return self.bot.rtfm_libraries.get(program)
+        ERROR_MESSAGE = f"Could not find anything with {library}."
 
-        else:
-            url = self.bot.rtfm_libraries.get(program)
+        url = self.bot.rtfm_libraries.get(program)
+        if not url:
+            return ERROR_MESSAGE
 
-            results = await self.bot.scraper.search(args, page=url)
+        if not library:
+            return url
 
-            if not results:
-                return f"Could not find anything with {args}."
+        results = await self.bot.scraper.search(library, page=url)
+        if not results:
+            return library
 
-            else:
-                return results
+        return {name: link for name, link in results}
 
-    async def rtfm_send(self, ctx, results):
-
+    async def rtfm_send(self, ctx: Context, results: Union[dict[str, str], str]) -> None:
         if isinstance(results, str):
-            await ctx.send(results, allowed_mentions=discord.AllowedMentions.none())
-
+            await ctx.send(results, allowed_mentions=AllowedMentions.none())
         else:
-            embed = discord.Embed(color=random.randint(0, 16777215))
+            embed = Embed(color=randint(0, 16777215))
+            embed.description = "\n".join(f"[`{result}`]({value})" for result, value in tuple(results.items())[:10])
 
-            results = results[:10]
-            embed.description = "\n".join(f"[`{result}`]({value})" for result, value in results)
+            message_reference = reference(ctx.message)
+            await ctx.send(embed=embed, reference=message_reference)
 
-            reference = utils.reference(ctx.message)
-            await ctx.send(embed=embed, reference=reference)
-
-    @commands.group(
-        aliases=["rtd", "rtfs"],
-        invoke_without_command=True,
-        brief="most of this is based on R.danny including the reference(but this is my own code). But it's my own implentation of it",
-    )
-    async def rtfm(self, ctx, *, args=None):
-
+    @commands.command(aliases=["rtd", "rtfs"])
+    async def rtfm(self, ctx: Context, *, args: Optional[str] = None) -> None:
+        """most of this is based on R.danny including the reference(but this is my own code). But it's my own implentation of it"""
         await ctx.typing()
-        results = await self.rtfm_lookup(program="dpy-latest", args=args)
+        results = await self.rtfm_lookup(program="dpy-latest", library=args)
         await self.rtfm_send(ctx, results)
 
-    class RtfmEmbed(menus.ListPageSource):
-        async def format_page(self, menu, item):
-            embed = discord.Embed(title="Packages:", description=item, color=random.randint(0, 16777215))
-            return embed
-
-    @commands.command(brief="a command to view the rtfm DB")
-    async def rtfm_view(self, ctx):
+    @commands.command()
+    async def rtfm_view(self, ctx: Context) -> None:
+        """a command to view the rtfm DB"""
         pag = commands.Paginator(prefix="", suffix="")
         for g in self.bot.rtfm_libraries:
             pag.add_line(f"{g} : {self.bot.rtfm_libraries.get(g)}")
 
-        menu = ViewMenuPages(self.RtfmEmbed(pag.pages, per_page=1), delete_message_after=True)
+        menu = RTFMEmbedPaginator(pag.pages, delete_message_after=True)  # type: ignore
         await menu.start(ctx)
 
 
-async def setup(bot):
+async def setup(bot: RTFMBot) -> None:
     await bot.add_cog(DevTools(bot))
