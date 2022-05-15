@@ -33,7 +33,7 @@ class DevTools(commands.Cog):
 
         results = await self.bot.scraper.search(library, page=url)
         if not results:
-            return library
+            return ERROR_MESSAGE
 
         return {name: link for name, link in results}
 
