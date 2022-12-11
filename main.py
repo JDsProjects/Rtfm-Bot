@@ -1,28 +1,27 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, List, Optional, Pattern, Match, TypedDict
-
-import traceback
 import logging
-
-from re import compile as re_compile, escape as re_escape, IGNORECASE
-from os import listdir, getenv as os_getenv
-
-from discord import Intents
-from discord.ext import commands
+import traceback
+from os import getenv as os_getenv
+from os import listdir
+from re import IGNORECASE
+from re import compile as re_compile
+from re import escape as re_escape
+from typing import TYPE_CHECKING, Any, List, Match, Optional, Pattern, TypedDict
 
 from aiohttp import ClientSession
-from doc_search import AsyncScraper
 from asqlite import connect as asqlite_connect
+from discord import Intents
+from discord.ext import commands
+from doc_search import AsyncScraper
 
 if TYPE_CHECKING:
-    from typing_extensions import Self
-
-    from discord import Message
-    from discord.ext.commands.bot import PrefixType
+    from sqlite3 import Row
 
     from asqlite import Connection, Cursor
-    from sqlite3 import Row
+    from discord import Message
+    from discord.ext.commands.bot import PrefixType
+    from typing_extensions import Self
 
     class RTFMLibraryData(TypedDict):
         name: str

@@ -1,7 +1,7 @@
-from typing import TYPE_CHECKING, Any, Optional
 from random import randint
+from typing import TYPE_CHECKING, Any, Optional
 
-from discord import Message, Embed
+from discord import Embed, Message
 
 from utils.simple_paginator import SimplePaginator
 

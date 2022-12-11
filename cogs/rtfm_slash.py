@@ -1,14 +1,16 @@
 from __future__ import annotations
+
+import typing
 from typing import TYPE_CHECKING
 
+from discord.app_commands import AppCommandError, Choice
+from discord.app_commands import command as app_command
 from discord.ext import commands
-import typing
-from discord.app_commands import AppCommandError, command as app_command, Choice
 
 if TYPE_CHECKING:
-    from main import RTFMBot
-
     from discord import Interaction
+
+    from main import RTFMBot
 else:
     RTFMBot = commands.Bot
 

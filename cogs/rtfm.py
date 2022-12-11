@@ -1,5 +1,5 @@
-from typing import TYPE_CHECKING, Any, Optional, Union
 from random import randint
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 from discord import AllowedMentions, Embed
 from discord.ext import commands
@@ -7,9 +7,9 @@ from discord.ext import commands
 from utils.extra import RTFMEmbedPaginator, reference
 
 if TYPE_CHECKING:
-    from main import RTFMBot
-
     from discord.ext.commands import Context
+
+    from main import RTFMBot
 else:
     Context = Any
     RTFMBot = commands.Bot

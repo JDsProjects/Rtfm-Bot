@@ -1,16 +1,16 @@
-from discord.ext.commands import CommandError, Context
+from typing import TYPE_CHECKING, Annotated
 
-from jishaku.cog import STANDARD_FEATURES, OPTIONAL_FEATURES
-from jishaku.features.baseclass import Feature
-from jishaku.codeblocks import codeblock_converter, Codeblock
+from discord.ext.commands import CommandError, Context
+from jishaku.codeblocks import Codeblock, codeblock_converter
+from jishaku.cog import OPTIONAL_FEATURES, STANDARD_FEATURES
 from jishaku.exception_handling import ReplResponseReactor
+from jishaku.features.baseclass import Feature
+from jishaku.functools import AsyncSender
 from jishaku.repl import AsyncCodeExecutor
 from jishaku.repl.repl_builtins import get_var_dict_from_ctx
-from jishaku.functools import AsyncSender
 
 # look into making more jishaku commands: https://jishaku.readthedocs.io/en/latest/cog.html
 
-from typing import TYPE_CHECKING, Annotated
 
 if TYPE_CHECKING:
     from main import RTFMBot

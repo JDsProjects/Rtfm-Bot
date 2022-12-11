@@ -1,18 +1,18 @@
 from __future__ import annotations
+
 from typing import TYPE_CHECKING, Any, Optional, Union
 
 from discord import ButtonStyle, Embed
-from discord.ui import View, button as button_decorator
+from discord.ui import View
+from discord.ui import button as button_decorator
 from discord.utils import maybe_coroutine
 
 if TYPE_CHECKING:
-    from typing_extensions import Self
-
     from discord import Interaction, InteractionMessage, Message, WebhookMessage
+    from discord.ext.commands.context import Context
     from discord.ui.button import Button
     from discord.ui.item import Item
-
-    from discord.ext.commands.context import Context
+    from typing_extensions import Self
 
     ValidPage = Union[str, Embed]
     PossibleMessage = Union[InteractionMessage, Message, WebhookMessage]
