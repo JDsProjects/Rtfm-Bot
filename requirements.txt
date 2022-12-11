@@ -3,4 +3,3 @@ git+https://github.com/Rapptz/discord.py
 git+https://github.com/Tom-the-Bomb/doc-search
 git+https://github.com/Rapptz/asqlite/
 beautifulsoup4
-python-dotenv

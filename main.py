@@ -11,7 +11,6 @@ from os import listdir, getenv as os_getenv
 from discord import Intents
 from discord.ext import commands
 
-from dotenv import load_dotenv
 from aiohttp import ClientSession
 from doc_search import AsyncScraper
 from asqlite import connect as asqlite_connect
@@ -97,5 +96,4 @@ async def on_error(event: str, *args: Any, **kwargs: Any) -> None:
 
 logging.basicConfig(level=logging.INFO)
 
-load_dotenv()
 bot.run(os_getenv("TOKEN"))
