@@ -3,7 +3,6 @@ from __future__ import annotations
 import logging
 import traceback
 from os import getenv as os_getenv
-from os import listdir
 from re import IGNORECASE
 from re import compile as re_compile
 from re import escape as re_escape
@@ -27,6 +26,7 @@ if TYPE_CHECKING:
         name: str
         link: str
 
+from cogs import EXTENSIONS
 
 async def get_prefix(client: RTFMBot, message: Message) -> list[str]:
     extras: list[str] = ["rtfm*", "rm*", "r*"]
@@ -51,12 +51,12 @@ class RTFMBot(commands.Bot):
 
     async def setup_hook(self) -> None:
         # load extensions
-        for filename in listdir("./cogs"):
-            if filename.endswith(".py") and not filename.startswith("_"):
-                try:
-                    await self.load_extension(f"cogs.{filename[:-3]}")
-                except commands.errors.ExtensionError:
-                    traceback.print_exc()
+        
+        for cog in EXTENSIONS:
+            try:
+                await self.load_extension(f"{cog}")
+            except commands.errors.ExtensionError:
+                traceback.print_exc()
 
         # initialize global aiohttp session
         self.session = ClientSession()
