@@ -12,7 +12,6 @@ from aiohttp import ClientSession
 from asqlite import connect as asqlite_connect
 from discord import Intents
 from discord.ext import commands
-from doc_search import AsyncScraper
 
 if TYPE_CHECKING:
     from sqlite3 import Row
@@ -47,7 +46,6 @@ class RTFMBot(commands.Bot):
         self.db: Optional[Connection] = None
         self.session: Optional[ClientSession] = None
         self.rtfm_libraries: dict[str, str] = {}
-        self.scraper: Optional[AsyncScraper] = None
 
     async def setup_hook(self) -> None:
         # load extensions
@@ -69,8 +67,7 @@ class RTFMBot(commands.Bot):
         rtfm_libraries: list[Row[str]] = await result.fetchall()
         self.rtfm_libraries = dict(rtfm_libraries)  # type: ignore # this is supported.
 
-        # initialize scraper
-        self.scraper = AsyncScraper(session=self.session)
+        
 
     async def close(self) -> None:
         if self.session and not self.session.closed:
