@@ -15,11 +15,17 @@ class RtfmChoice(discord.ui.View):
     def __init__(self, ctx, libraries, **kwargs):
         super().__init__(**kwargs)
 
+        libraries = libraries[:25]
+        libraries2 = libraries[25:]
+
         self.value = [o.link for o in libraries][0]
         self.ctx = ctx
 
         self.add_item(
             RtfmSelects([discord.SelectOption(label=o.name, value=o.link, emoji="🔍") for o in libraries])
+        )
+        self.add_item(
+            RtfmSelects([discord.SelectOption(label=o.name, value=o.link, emoji="🔍") for o in libraries2])
         )
 
     async def interaction_check(self, interaction: discord.Interaction):
