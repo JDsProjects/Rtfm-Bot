@@ -56,7 +56,7 @@ class RTFMSlash(commands.Cog):
 
         results = [Choice(name=result.name, value=result.url.replace(url, "")) for result in filtered_results]
 
-        return results[0:25]
+        return results[:25]
 
     @rtfm_slash.error
     async def rtfm_error(self, interaction: discord.Interaction, error) -> None:
