@@ -62,7 +62,7 @@ class RTFMBot(commands.Bot):
         # load rtfm libraries
         self.db = await asqlite_connect("bot.db")
         main_cursor: Cursor = await self.db.cursor()
-        result: Cursor = await main_cursor.execute("SELECT * FROM RTFM_DICTIONARY")
+        result: Cursor = await main_cursor.execute("SELECT * FROM RTFM_DICTIONARY ORDER BY NAME ASC")
 
         rtfm_libraries: list[Row[str]] = await result.fetchall()
         self.rtfm_libraries = dict(rtfm_libraries)  # type: ignore # this is supported.
