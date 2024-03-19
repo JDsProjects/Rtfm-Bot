@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING, Any, Optional, Union
 
 from discord import AllowedMentions, Embed
 from discord.ext import commands
+import discord
 
 from utils.extra import RTFMEmbedPaginator, reference
 import utils
