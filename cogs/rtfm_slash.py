@@ -111,7 +111,12 @@ class RTFMSlash(commands.Cog):
         print(interaction.command)
 
     
-
+    @app_commands.command(description="looks up docs but for dms and group chats", name="test")
+    @app_commands.private_channel_only()
+    async def rtfm_slash_private(
+        self, interaction: discord.Interaction,
+    ) -> None:
+        await interaction.response.send_message("Testing This.")
 
 async def setup(bot: RTFMBot) -> None:
     await bot.add_cog(RTFMSlash(bot))
