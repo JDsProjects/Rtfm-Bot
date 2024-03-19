@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 else:
     MessageReference = Any
 
-__all__: tuple[str, ...] = ("reference", "RTFMEmbedPaginator")
+__all__: tuple[str, ...] = ("reference", "RTFMEmbedPaginator", "rtfm")
 
 
 def reference(message) -> Optional[MessageReference]:
