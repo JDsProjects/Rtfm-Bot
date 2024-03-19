@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 from discord.app_commands import AppCommandError, Choice
 from discord.app_commands import command as app_command
 from discord.ext import commands
+from discord import app_commands
 import utils
 from utils import fuzzy
 
