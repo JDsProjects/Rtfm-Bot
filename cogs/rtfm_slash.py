@@ -113,9 +113,9 @@ class RTFMSlash(commands.Cog):
     
     @commands.hybrid_command(description="looks up docs but for dms and group chats", name="test")
     async def test(
-        self, interaction: discord.Interaction,
+        self, ctx: commands.Context,
     ) -> None:
-        await interaction.response.send_message("Testing This.")
+        await ctx.send("Testing This.")
 
 async def setup(bot: RTFMBot) -> None:
     await bot.add_cog(RTFMSlash(bot))
