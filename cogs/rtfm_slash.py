@@ -7,8 +7,8 @@ from discord.app_commands import AppCommandError, Choice
 from discord.app_commands import command as app_command
 from discord.ext import commands
 from discord import app_commands
-import utils
 from utils import fuzzy
+import utils
 
 if TYPE_CHECKING:
     from discord import Interaction
