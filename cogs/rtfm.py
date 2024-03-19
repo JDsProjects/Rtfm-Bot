@@ -58,7 +58,7 @@ class DevTools(commands.Cog):
     )
     async def rtfm(self, ctx, *, args=None):
         
-        libraries = ObjectWrap(self.bot.rtfm_libraries)
+        libraries = [utils.ObjectWrap(name, url) for (name, url) in self.bot.rtfm_libraries.items()]
 
         view = utils.RtfmChoice(ctx, libraries, timeout=15.0)
         view.message = await ctx.send(content="Please Pick a library you want to parse", view=view)
