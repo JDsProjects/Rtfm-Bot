@@ -15,8 +15,9 @@ class RtfmChoice(discord.ui.View):
     def __init__(self, ctx, libraries, **kwargs):
         super().__init__(**kwargs)
 
-        libraries = libraries[:25]
         libraries2 = libraries[25:]
+        libraries = libraries[:25]
+        
 
         self.value = [o.link for o in libraries][0]
         self.ctx = ctx
