@@ -5,6 +5,8 @@ from discord import AllowedMentions, Embed
 from discord.ext import commands
 
 from utils.extra import RTFMEmbedPaginator, reference
+import utils
+from utils import fuzzy, ObjectWrap
 
 if TYPE_CHECKING:
     from discord.ext.commands import Context
@@ -19,39 +21,54 @@ class DevTools(commands.Cog):
     def __init__(self, bot: RTFMBot) -> None:
         self.bot = bot
 
-    async def rtfm_lookup(self, program: str, *, library: Optional[str] = None) -> Union[dict[str, str], str]:
-        assert self.bot.scraper is not None
-
-        ERROR_MESSAGE = f"Could not find anything with {library}."
-
-        url = self.bot.rtfm_libraries.get(program)
-        if not url:
-            return ERROR_MESSAGE
-
-        if not library:
+    async def rtfm_lookup(self, url=None, *, args=None):
+        if not args:
             return url
 
-        results = await self.bot.scraper.search(library, page=url)
-        if not results:
-            return ERROR_MESSAGE
-
-        return {name: link for name, link in results}
-
-    async def rtfm_send(self, ctx: Context, results: Union[dict[str, str], str]) -> None:
-        if isinstance(results, str):
-            await ctx.send(results, allowed_mentions=AllowedMentions.none())
         else:
-            embed = Embed(color=randint(0, 16777215))
-            embed.description = "\n".join(f"[`{result}`]({value})" for result, value in tuple(results.items())[:10])
+            unfiltered_results = await utils.rtfm(self.bot, url)
+
+            results = fuzzy.finder(args, unfiltered_results, key=lambda t: t[0])
+
+            if not results:
+                return f"Could not find anything with {args}."
+
+            else:
+                return results
+
+    async def rtfm_send(self, ctx, results):
+        if isinstance(results, str):
+            await ctx.send(results, allowed_mentions=discord.AllowedMentions.none())
+
+        else:
+            embed = discord.Embed(color=random.randint(0, 16777215))
+
+            results = results[:10]
+
+            embed.description = "\n".join(f"[`{result}`]({result.url})" for result in results)
 
             message_reference = reference(ctx.message)
             await ctx.send(embed=embed, reference=message_reference)
 
-    @commands.command(aliases=["rtd", "rtfs"])
-    async def rtfm(self, ctx: Context, *, args: Optional[str] = None) -> None:
-        """most of this is based on R.danny including the reference(but this is my own code). But it's my own implentation of it"""
+
+    @commands.command(
+        aliases=["rtd", "rtfs", "rtdm"],
+        invoke_without_command=True,
+        brief="a rtfm command that allows you to lookup at any library we support looking up(using selects)",
+    )
+    async def rtfm(self, ctx, *, args=None):
+        
+        librariees = ObjectWrap(self.bot.rtfm_dictionary)
+
+        view = utils.RtfmChoice(ctx, self.bot.rtfm_dictionary, timeout=15.0)
+        view.message = await ctx.send(content="Please Pick a library you want to parse", view=view)
+
+        await view.wait()
+
         await ctx.typing()
-        results = await self.rtfm_lookup(program="dpy-latest", library=args)
+
+        results = await self.rtfm_lookup(url=view.value, args=args)
+
         await self.rtfm_send(ctx, results)
 
     @commands.command()

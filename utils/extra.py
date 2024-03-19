@@ -1,6 +1,6 @@
 from __future__ import annotations
 from random import randint
-from typing import TYPE_CHECKING, Any, Optional, NamedTuple
+from typing import TYPE_CHECKING, Any, Optional, NamedTuple, TypedDict
 import zlib
 
 from discord import Embed, Message
@@ -69,3 +69,8 @@ async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
         results.append(RtfmObject(label, url + fragment))
 
     return results
+
+class ObjectWrap(TypedDict):
+    name: str
+    link: str
+
