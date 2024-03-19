@@ -110,8 +110,8 @@ class RTFMSlash(commands.Cog):
         print(interaction.command)
 
     
-    @app_commands.dm_only()
-    @app_commands.command(description="looks up docs but for dms and group chats", name="test")
+    
+    @commands.hybrid_command(description="looks up docs but for dms and group chats", name="test")
     async def test(
         self, interaction: discord.Interaction,
     ) -> None:
