@@ -1,6 +1,6 @@
 from __future__ import annotations
 from random import randint
-from typing import TYPE_CHECKING, Any, Optional, NamedTuple, TypedDict
+from typing import TYPE_CHECKING, Any, Optional, NamedTuple
 import zlib
 
 from discord import Embed, Message
