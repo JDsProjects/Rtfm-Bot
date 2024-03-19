@@ -1,2 +1,2 @@
-from .extra import __all__
-from .simple_paginator import __all__
+from .extra import reference, RTFMEmbedPaginator, rtfm
+from .simple_paginator import SimplePaginator
