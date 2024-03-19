@@ -1,5 +1,6 @@
+from __future__ import annotations
 from random import randint
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any, Optional, NamedTuple
 
 from discord import Embed, Message
 
@@ -7,6 +8,7 @@ from utils.simple_paginator import SimplePaginator
 
 if TYPE_CHECKING:
     from discord import MessageReference
+    from ..main import RTFMBot
 else:
     MessageReference = Any
 
@@ -24,3 +26,45 @@ def reference(message) -> Optional[MessageReference]:
 class RTFMEmbedPaginator(SimplePaginator):
     def format_page(self, page: str) -> Embed:
         return Embed(title="Packages:", description=page, color=randint(0, 16777215))
+    
+class RtfmObject(NamedTuple):
+    name: str
+    url: str
+
+    def __str__(self) -> str:
+        return self.name
+
+async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
+    
+    async with await bot.session.get(f"{url}objects.inv") as response:
+        lines = (await response.read()).split(b"\n")
+
+    first_10_lines = lines[:10]
+    first_10_lines = [n for n in first_10_lines if not n.startswith(b"#")]
+
+    lines = first_10_lines + lines[10:]
+    joined_lines = b"\n".join(lines)
+    full_data = zlib.decompress(joined_lines)
+    normal_data = full_data.decode()
+    new_list = normal_data.split("\n")
+
+    results = []
+    for x in new_list:
+        try:
+            name, type, _, fragment, *label = x.split(" ")
+
+            text = " ".join(label)
+
+            if text != "-":
+                label = text
+
+            else:
+                label = name
+
+        except:
+            continue
+
+        fragment = fragment.replace("$", name)
+        results.append(RtfmObject(label, url + fragment))
+
+    return results
