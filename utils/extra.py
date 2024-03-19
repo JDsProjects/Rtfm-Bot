@@ -70,7 +70,10 @@ async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
 
     return results
 
-class ObjectWrap(TypedDict):
+class ObjectWrap(NamedTuple):
     name: str
     link: str
+
+    def __str__(self) -> str:
+        return self.name
 
