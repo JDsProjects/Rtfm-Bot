@@ -104,11 +104,13 @@ class RTFMSlash(commands.Cog):
 
         return results[:25]
 
-    @rtfm_slash.error
-    async def rtfm_error(self, interaction: discord.Interaction, error) -> None:
+    @rtfm_slash_private.error
+    async def rtfm_private_error(self, interaction: discord.Interaction, error) -> None:
         await interaction.response.send_message(f"{error}! Please Send to this to my developer", ephemeral=True)
         print(error)
         print(interaction.command)
+
+    
 
 
 async def setup(bot: RTFMBot) -> None:
