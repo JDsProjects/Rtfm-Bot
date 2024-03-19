@@ -60,7 +60,7 @@ class DevTools(commands.Cog):
         
         librariees = ObjectWrap(self.bot.rtfm_libraries)
 
-        view = utils.RtfmChoice(ctx, self.bot.rtfm_dictionary, timeout=15.0)
+        view = utils.RtfmChoice(ctx, libraries, timeout=15.0)
         view.message = await ctx.send(content="Please Pick a library you want to parse", view=view)
 
         await view.wait()
