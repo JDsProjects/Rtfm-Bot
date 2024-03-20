@@ -73,10 +73,10 @@ async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
 async def algolia_lookup(bot: RTFMBot, app_id : str, app_key: str, index : str, query: str):
 
     headers = {
-            "X-Algolia-Application-Id": app_id,
-            "X-Algolia-API-Key": app_key,
-            "Content-Type": "application/json",
-        }
+        "Content-Type": "application/json",
+		"X-Algolia-API-Key": app_key,
+		"X-Algolia-Application-Id": app_id,
+	}
 
     params = {"query" : query}
 
