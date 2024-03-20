@@ -70,7 +70,7 @@ async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
 
     return results
 
-async def alogoia_lookup(bot: RTFMBot, app_id : str, app_key: str, index : str, query: str):
+async def algolia_lookup(bot: RTFMBot, app_id : str, app_key: str, index : str, query: str):
 
     headers = {
             "X-Algolia-Application-Id": app_id,
@@ -78,6 +78,8 @@ async def alogoia_lookup(bot: RTFMBot, app_id : str, app_key: str, index : str, 
             "Content-Type": "application/json",
         }
 
-    async with await bot.session.post(f"{app_id}/https://algolia.net/1/indexes/{index}/query", headers=headers) as response:
+    params = {"query" : query}
+
+    async with await bot.session.post(f"{app_id}/https://algolia.net/1/indexes/{index}/query", headers=headers, params=params) as response:
         return await response.json()
 
