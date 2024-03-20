@@ -19,14 +19,14 @@ class RtfmChoice(discord.ui.View):
         libraries = libraries[:25]
         
 
-        self.value = [o.link for o in libraries][0]
+        self.value = [o.url for o in libraries][0]
         self.ctx = ctx
 
         self.add_item(
-            RtfmSelects([discord.SelectOption(label=o.name, value=o.link, emoji="🔍") for o in libraries])
+            RtfmSelects([discord.SelectOption(label=o.name, value=o.url, emoji="🔍") for o in libraries])
         )
         self.add_item(
-            RtfmSelects([discord.SelectOption(label=o.name, value=o.link, emoji="🔍") for o in libraries2])
+            RtfmSelects([discord.SelectOption(label=o.name, value=o.url, emoji="🔍") for o in libraries2])
         )
 
     async def interaction_check(self, interaction: discord.Interaction):
