@@ -1,6 +1,5 @@
 from __future__ import annotations
 from random import randint
-import json
 from typing import TYPE_CHECKING, Any, Optional, NamedTuple
 import zlib
 
@@ -71,16 +70,17 @@ async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
 
     return results
 
-async def algolia_lookup(bot: RTFMBot, app_id : str, app_key: str, index : str, query: str):
+async def algolia_lookup(bot: RTFMBot, app_id: str, app_key: str, index: str, query: str):
 
     headers = {
         "Content-Type": "application/json",
-		"X-Algolia-API-Key": app_key,
-		"X-Algolia-Application-Id": app_id,
-	}
+        "X-Algolia-API-Key": app_key,
+        "X-Algolia-Application-Id": app_id,
+    }
 
-    
-    data = {"params": json.dumps({"query": query})}
+    # Directly include the query parameter in the data dictionary
+    data = {"query": query}  # No need for json.dumps() here
+
     async with await bot.session.post(f"https://{app_id}.algolia.net/1/indexes/{index}/query", data=data) as response:
         return await response.json()
 
