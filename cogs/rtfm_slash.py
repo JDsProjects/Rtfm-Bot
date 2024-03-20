@@ -119,5 +119,22 @@ class RTFMSlash(commands.Cog):
         print(error)
         print(interaction.command)
 
+    @app_commands.user_install()
+    @app_commands.allow_contexts(guilds=True, dms=True, private_channels=True)
+    @app_commands.command(description="sends link to bot's source code", name="source")
+    async def source(self, interaction: discord.Interaction):
+
+        view = discord.ui.View()
+        view.add_item(
+            discord.ui.Button(
+                label=f"Source",
+                url="https://github.com/JDsProjects/Rtfm-Bot",
+                style=discord.ButtonStyle.link,
+            )
+        )
+        await interaction.response.send_message(
+            "Source: https://github.com/JDsProjects/Rtfm-Bot", view=view
+        )
+
 async def setup(bot: RTFMBot) -> None:
     await bot.add_cog(RTFMSlash(bot))
