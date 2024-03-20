@@ -100,7 +100,7 @@ class RTFMSlash(commands.Cog):
 
         for result in results:
             if len(result.value) > 100:
-                yield result.value
+                print(result.value)
 
         return results[:25]
 
