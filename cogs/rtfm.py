@@ -7,7 +7,7 @@ import discord
 
 from utils.extra import RTFMEmbedPaginator, reference
 import utils
-from utils import fuzzy, ObjectWrap
+from utils import fuzzy
 
 if TYPE_CHECKING:
     from discord.ext.commands import Context
@@ -59,7 +59,7 @@ class DevTools(commands.Cog):
     )
     async def rtfm(self, ctx, *, args=None):
         
-        libraries = [utils.ObjectWrap(name, url) for (name, url) in self.bot.rtfm_libraries.items()]
+        libraries = [utils.RtfmObject(name, url) for (name, url) in self.bot.rtfm_libraries.items()]
 
         view = utils.RtfmChoice(ctx, libraries, timeout=15.0)
         view.message = await ctx.send(content="Please Pick a library you want to parse", view=view)

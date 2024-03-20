@@ -70,10 +70,14 @@ async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
 
     return results
 
-class ObjectWrap(NamedTuple):
-    name: str
-    link: str
+async def alogoia_lookup(bot: RTFMBot, app_id : str, app_key: str, index : str, query: str):
 
-    def __str__(self) -> str:
-        return self.name
+    headers = {
+            "X-Algolia-Application-Id": app_id,
+            "X-Algolia-API-Key": app_key,
+            "Content-Type": "application/json",
+        }
+
+    async with await bot.session.post(f"{app_id}/https://algolia.net/1/indexes/{index}/query", headers=headers) as response:
+        return await response.json()
 
