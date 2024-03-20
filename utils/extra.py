@@ -79,10 +79,10 @@ async def algolia_lookup(bot: RTFMBot, app_id: str, app_key: str, index: str, qu
         "X-Algolia-Application-Id": app_id,
     }
 
-    # Use json.dumps() only when preparing a complete JSON string
+    # Construct complete JSON string
     data_string = json.dumps({"query": query})
-    data = json.loads(data_string)  # Convert back to a dictionary
 
-    async with await bot.session.post(f"https://{app_id}.algolia.net/1/indexes/{index}/query", data=data) as response:
+    async with await bot.session.post(f"https://{app_id}.algolia.net/1/indexes/{index}/query", data=data_string) as response:
         return await response.json()
+
 
