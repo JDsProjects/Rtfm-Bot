@@ -80,17 +80,20 @@ class RTFMSlash(commands.Cog):
 
     @docs.autocomplete("query")
     async def docs_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
-        # unfiltered_results = await utils.rtfm(self.bot, url)
-        # use new method to handle results from discord ologia
 
-        all_choices = [Choice(name=result.name, value=result.url.replace(url, "")) for result in unfiltered_results]
+        url = "https://discord.com/developers/docs/"
+        unfiltered_results = await utils.rtfm(self.bot, url)
+        # use new method to handle results from discord ologia, but fuzzy can be used now
+        # I will remove the starting discord api docs if necessary.
+
+        all_choices = [Choice(name=result.name, value=result.url) for result in unfiltered_results]
 
         if not current:
             return all_choices[:25]
 
         filtered_results = fuzzy.finder(current, unfiltered_results, key=lambda t: t[0])
 
-        results = [Choice(name=result.name, value=result.url.replace(url, "")) for result in filtered_results]
+        results = [Choice(name=result.name, value=result.url) for result in filtered_results]
 
         return results[:25]
 

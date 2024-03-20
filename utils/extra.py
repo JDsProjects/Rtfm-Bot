@@ -71,7 +71,10 @@ async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
 
     return results
 
+
 async def algolia_lookup(bot: RTFMBot, app_id: str, app_key: str, index: str, query: str):
+    
+    results = []
 
     headers = {
         "Content-Type": "application/json",
@@ -86,9 +89,12 @@ async def algolia_lookup(bot: RTFMBot, app_id: str, app_key: str, index: str, qu
         print(response.status)
 
         if not response.ok:
-            return []
+            return results
 
         resp = await response.json()
         values = resp["hits"]
 
+        for value in values:
+            results.append(RtfmObject(value["anchor"], value["url"]))
 
+        return results
