@@ -94,8 +94,8 @@ class RTFMSlash(commands.Cog):
 
         return results[:25]
 
-    @rtfm_slash_private.error
-    async def rtfm_private_error(self, interaction: discord.Interaction, error) -> None:
+    @docs.error
+    async def docs_error(self, interaction: discord.Interaction, error) -> None:
         await interaction.response.send_message(f"{error}! Please Send to this to my developer", ephemeral=True)
         print(error)
         print(interaction.command)
