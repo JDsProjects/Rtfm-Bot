@@ -6,6 +6,7 @@ import os
 
 from discord.app_commands import AppCommandError, Choice
 from discord.app_commands import command as app_command
+import discord
 from discord.ext import commands
 from discord import app_commands
 from utils import fuzzy
