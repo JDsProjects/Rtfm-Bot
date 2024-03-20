@@ -82,7 +82,8 @@ class RTFMSlash(commands.Cog):
     async def docs_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
 
         url = "https://discord.com/developers/docs/"
-        unfiltered_results = await utils.rtfm(self.bot, url)
+
+        unfiltered_results = await utils.algolia_lookup(self.bot, os.environ["ALGOLIA_APP_ID"], os.environ["ALGOLIA_API_KEY"], "discord", current)
         # use new method to handle results from discord ologia, but fuzzy can be used now
         # I will remove the starting discord api docs if necessary.
 
