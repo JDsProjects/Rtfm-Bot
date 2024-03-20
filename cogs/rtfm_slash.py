@@ -66,7 +66,7 @@ class RTFMSlash(commands.Cog):
         print(interaction.command)
 
     
-    @app_commands.command(description="looks up docs from discord developer docs", name="rtfm-private")
+    @app_commands.command(description="looks up docs from discord developer docs", name="docs")
     async def docs(
         self, interaction: discord.Interaction, query: typing.Optional[str] = None
     ) -> None:

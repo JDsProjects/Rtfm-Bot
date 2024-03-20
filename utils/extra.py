@@ -83,6 +83,12 @@ async def algolia_lookup(bot: RTFMBot, app_id: str, app_key: str, index: str, qu
     data_string = json.dumps({"query": query})
 
     async with await bot.session.post(f"https://{app_id}.algolia.net/1/indexes/{index}/query", data=data_string, headers=headers) as response:
-        return await response.json()
+        print(response.status)
+
+        if not response.ok:
+            return []
+
+        resp = await response.json()
+        values = resp["hits"]
 
 
