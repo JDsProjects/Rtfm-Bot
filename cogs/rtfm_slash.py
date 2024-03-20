@@ -98,6 +98,10 @@ class RTFMSlash(commands.Cog):
 
         results = [Choice(name=result.name, value=result.url.replace(url, "")) for result in filtered_results]
 
+        for result in results:
+            if len(result.value) > 100:
+                yield result.value
+
         return results[:25]
 
     @docs.error
