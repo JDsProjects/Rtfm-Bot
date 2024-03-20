@@ -42,7 +42,7 @@ class DevTools(commands.Cog):
             await ctx.send(results, allowed_mentions=discord.AllowedMentions.none())
 
         else:
-            embed = discord.Embed(color=random.randint(0, 16777215))
+            embed = discord.Embed(color=randint(0, 16777215))
 
             results = results[:10]
 
