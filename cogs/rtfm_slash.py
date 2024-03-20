@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import typing
 from typing import TYPE_CHECKING
+import os
 
 from discord.app_commands import AppCommandError, Choice
 from discord.app_commands import command as app_command
