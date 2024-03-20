@@ -80,6 +80,6 @@ async def algolia_lookup(bot: RTFMBot, app_id : str, app_key: str, index : str, 
 
     params = {"query" : query}
 
-    async with await bot.session.post(f"{app_id}/https://algolia.net/1/indexes/{index}/query", headers=headers, params=params) as response:
+    async with await bot.session.post(f"https://{app_id}.algolia.net/1/indexes/{index}/query", headers=headers, params=params) as response:
         return await response.json()
 
