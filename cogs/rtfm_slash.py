@@ -102,6 +102,12 @@ class RTFMSlash(commands.Cog):
             if len(result.value) > 100:
                 print(result.value)
 
+         # seems to have issues with some sizes.
+
+        if not results:
+            results [utils.RtfmObject("Getting Started", "https://discord.com/developers/docs/")]
+            results = [Choice(name=result.name, value=result.url.replace(url, ""))]
+
         return results[:25]
 
     @docs.error
