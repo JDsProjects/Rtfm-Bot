@@ -105,7 +105,7 @@ class RTFMSlash(commands.Cog):
          # seems to have issues with some sizes.
 
         if not results:
-            results [utils.RtfmObject("Getting Started", "https://discord.com/developers/docs/")]
+            result = utils.RtfmObject("Getting Started", "https://discord.com/developers/docs/")
             results = [Choice(name=result.name, value=result.url.replace(url, ""))]
 
         return results[:25]
