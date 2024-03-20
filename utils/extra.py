@@ -1,5 +1,6 @@
 from __future__ import annotations
 from random import randint
+import json
 from typing import TYPE_CHECKING, Any, Optional, NamedTuple
 import zlib
 
@@ -78,8 +79,8 @@ async def algolia_lookup(bot: RTFMBot, app_id : str, app_key: str, index : str, 
 		"X-Algolia-Application-Id": app_id,
 	}
 
-    params = {"query" : query}
-
-    async with await bot.session.post(f"https://{app_id}.algolia.net/1/indexes/{index}/query", headers=headers, params=params) as response:
+    
+    data = {"params": json.dumps({"query": query})}
+    async with await bot.session.post(f"https://{app_id}.algolia.net/1/indexes/{index}/query", json=data) as response:
         return await response.json()
 
