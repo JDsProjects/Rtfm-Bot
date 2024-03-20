@@ -23,6 +23,8 @@ class RTFMSlash(commands.Cog):
     def __init__(self, bot: RTFMBot) -> None:
         self.bot = bot
 
+    @app_commands.user_install()
+    @app_commands.allow_contexts(guilds=True, dms=True, private_channels=True)
     @app_commands.command(description="looks up docs", name="rtfm")
     async def rtfm_slash(
         self, interaction: discord.Interaction, library: str, query: typing.Optional[str] = None
@@ -66,7 +68,8 @@ class RTFMSlash(commands.Cog):
         print(error)
         print(interaction.command)
 
-    
+    @app_commands.user_install()
+    @app_commands.allow_contexts(guilds=True, dms=True, private_channels=True)
     @app_commands.command(description="looks up docs from discord developer docs", name="docs")
     async def docs(
         self, interaction: discord.Interaction, query: typing.Optional[str] = None
