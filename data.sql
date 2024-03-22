@@ -28,5 +28,6 @@ INSERT INTO "RTFM_DICTIONARY" ("name","link") VALUES ('aiogifs','https://aiogifs
  ('pytube','https://pytube.io/en/latest/'),
  ('quart','https://quart.palletsprojects.com/en/latest/'),
  ('vt-py','https://virustotal.github.io/vt-py/'),
- ('wavelink','https://wavelink.readthedocs.io/en/latest/');
+ ('wavelink','https://wavelink.readthedocs.io/en/latest/'),
+ ('litestar','https://docs.litestar.dev/2/');
 COMMIT;
