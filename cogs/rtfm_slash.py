@@ -32,7 +32,7 @@ class RTFMSlash(commands.Cog):
     ) -> None:
         """Looks up docs for a library with optionally a query."""
 
-        library = library or dict(rtfm_dictionary)["master"]
+        library = library or self.bot.rtfm_libraries["master"]
 
         if query is None or query == "No Results Found":
             return await interaction.response.send_message(f"Alright Let's see \n{library}")
@@ -52,7 +52,7 @@ class RTFMSlash(commands.Cog):
 
     @rtfm_slash.autocomplete("query")
     async def rtfm_query_autocomplete(self, interaction: discord.Interaction, current: str) -> list[Choice]:
-        url = interaction.namespace.library or dict(rtfm_dictionary)["master"]
+        url = interaction.namespace.library or self.bot.rtfm_libraries["master"]
         unfiltered_results = await utils.rtfm(self.bot, url)
 
         all_choices = [Choice(name=result.name, value=result.url.replace(url, "")) for result in unfiltered_results]
