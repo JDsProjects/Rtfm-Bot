@@ -1,13 +1,12 @@
 from random import randint
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import TYPE_CHECKING, Any, Optional
 
-from discord import AllowedMentions, Embed
-from discord.ext import commands
 import discord
+from discord.ext import commands
 
-from utils.extra import RTFMEmbedPaginator, reference
 import utils
 from utils import fuzzy
+from utils.extra import RTFMEmbedPaginator, RtfmObject, reference
 
 if TYPE_CHECKING:
     from discord.ext.commands import Context
@@ -22,14 +21,14 @@ class DevTools(commands.Cog):
     def __init__(self, bot: RTFMBot) -> None:
         self.bot = bot
 
-    async def rtfm_lookup(self, url=None, *, args=None):
+    async def rtfm_lookup(self, url: str = "", *, args: str = ""):
         if not args:
             return url
 
         else:
             unfiltered_results = await utils.rtfm(self.bot, url)
 
-            results = fuzzy.finder(args, unfiltered_results, key=lambda t: t[0])
+            results = fuzzy.finder(args, unfiltered_results, key=lambda t: t.name)
 
             if not results:
                 return f"Could not find anything with {args}."
@@ -37,7 +36,7 @@ class DevTools(commands.Cog):
             else:
                 return results
 
-    async def rtfm_send(self, ctx, results):
+    async def rtfm_send(self, ctx: Context, results: str | list[RtfmObject]):
         if isinstance(results, str):
             await ctx.send(results, allowed_mentions=discord.AllowedMentions.none())
 
@@ -46,30 +45,31 @@ class DevTools(commands.Cog):
 
             results = results[:10]
 
-            embed.description = "\n".join(f"[`{result}`]({result.url})" for result in results)
+            embed.description = "\n".join(
+                f"[`{result}`]({result.url})" for result in results
+            )
 
-            message_reference = reference(ctx.message)
-            await ctx.send(embed=embed, reference=message_reference)
-
+            await ctx.reply(embed=embed)
 
     @commands.command(
         aliases=["rtd", "rtfs", "rtdm"],
         invoke_without_command=True,
         brief="a rtfm command that allows you to lookup at any library we support looking up(using selects)",
     )
-    async def rtfm(self, ctx, *, args=None):
-        
-        libraries = [utils.RtfmObject(name, url) for (name, url) in self.bot.rtfm_libraries.items()]
+    async def rtfm(self, ctx: Context, *, args: str = ""):
+        libraries = [
+            utils.RtfmObject(name, url)
+            for (name, url) in self.bot.rtfm_libraries.items()
+        ]
 
         view = utils.RtfmChoice(ctx, libraries, timeout=15.0)
-        view.message = await ctx.send(content="Please Pick a library you want to parse", view=view)
+        view.message = await ctx.send(
+            content="Please Pick a library you want to parse", view=view
+        )
 
         await view.wait()
-
         await ctx.typing()
-
         results = await self.rtfm_lookup(url=view.value, args=args)
-
         await self.rtfm_send(ctx, results)
 
     @commands.command()

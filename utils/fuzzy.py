@@ -17,7 +17,16 @@ from __future__ import annotations
 import heapq
 import re
 from difflib import SequenceMatcher
-from typing import Callable, Generator, Iterable, Literal, Optional, Sequence, TypeVar, overload
+from typing import (
+    Callable,
+    Generator,
+    Iterable,
+    Literal,
+    Optional,
+    Sequence,
+    TypeVar,
+    overload,
+)
 
 T = TypeVar("T")
 
@@ -84,7 +93,8 @@ def _extraction_generator(
     choices: Sequence[str],
     scorer: Callable[[str, str], int] = ...,
     score_cutoff: int = ...,
-) -> Generator[tuple[str, int], None, None]: ...
+) -> Generator[tuple[str, int], None, None]:
+    ...
 
 
 @overload
@@ -93,7 +103,8 @@ def _extraction_generator(
     choices: dict[str, T],
     scorer: Callable[[str, str], int] = ...,
     score_cutoff: int = ...,
-) -> Generator[tuple[str, int, T], None, None]: ...
+) -> Generator[tuple[str, int, T], None, None]:
+    ...
 
 
 def _extraction_generator(
@@ -122,7 +133,8 @@ def extract(
     scorer: Callable[[str, str], int] = ...,
     score_cutoff: int = ...,
     limit: Optional[int] = ...,
-) -> list[tuple[str, int]]: ...
+) -> list[tuple[str, int]]:
+    ...
 
 
 @overload
@@ -133,7 +145,8 @@ def extract(
     scorer: Callable[[str, str], int] = ...,
     score_cutoff: int = ...,
     limit: Optional[int] = ...,
-) -> list[tuple[str, int, T]]: ...
+) -> list[tuple[str, int, T]]:
+    ...
 
 
 def extract(
@@ -158,7 +171,8 @@ def extract_one(
     *,
     scorer: Callable[[str, str], int] = ...,
     score_cutoff: int = ...,
-) -> Optional[tuple[str, int]]: ...
+) -> Optional[tuple[str, int]]:
+    ...
 
 
 @overload
@@ -168,7 +182,8 @@ def extract_one(
     *,
     scorer: Callable[[str, str], int] = ...,
     score_cutoff: int = ...,
-) -> Optional[tuple[str, int, T]]: ...
+) -> Optional[tuple[str, int, T]]:
+    ...
 
 
 def extract_one(
@@ -195,7 +210,8 @@ def extract_or_exact(
     scorer: Callable[[str, str], int] = ...,
     score_cutoff: int = ...,
     limit: Optional[int] = ...,
-) -> list[tuple[str, int]]: ...
+) -> list[tuple[str, int]]:
+    ...
 
 
 @overload
@@ -206,7 +222,8 @@ def extract_or_exact(
     scorer: Callable[[str, str], int] = ...,
     score_cutoff: int = ...,
     limit: Optional[int] = ...,
-) -> list[tuple[str, int, T]]: ...
+) -> list[tuple[str, int, T]]:
+    ...
 
 
 def extract_or_exact(
@@ -217,7 +234,9 @@ def extract_or_exact(
     score_cutoff: int = 0,
     limit: Optional[int] = None,
 ) -> list[tuple[str, int]] | list[tuple[str, int, T]]:
-    matches = extract(query, choices, scorer=scorer, score_cutoff=score_cutoff, limit=limit)
+    matches = extract(
+        query, choices, scorer=scorer, score_cutoff=score_cutoff, limit=limit
+    )
     if len(matches) == 0:
         return []
 
@@ -241,7 +260,8 @@ def extract_matches(
     *,
     scorer: Callable[[str, str], int] = ...,
     score_cutoff: int = ...,
-) -> list[tuple[str, int]]: ...
+) -> list[tuple[str, int]]:
+    ...
 
 
 @overload
@@ -251,7 +271,8 @@ def extract_matches(
     *,
     scorer: Callable[[str, str], int] = ...,
     score_cutoff: int = ...,
-) -> list[tuple[str, int, T]]: ...
+) -> list[tuple[str, int, T]]:
+    ...
 
 
 def extract_matches(
@@ -261,7 +282,9 @@ def extract_matches(
     scorer: Callable[[str, str], int] = quick_ratio,
     score_cutoff: int = 0,
 ) -> list[tuple[str, int]] | list[tuple[str, int, T]]:
-    matches = extract(query, choices, scorer=scorer, score_cutoff=score_cutoff, limit=None)
+    matches = extract(
+        query, choices, scorer=scorer, score_cutoff=score_cutoff, limit=None
+    )
     if len(matches) == 0:
         return []
 
@@ -290,7 +313,8 @@ def finder(
     *,
     key: Optional[Callable[[T], str]] = ...,
     raw: Literal[True],
-) -> list[tuple[int, int, T]]: ...
+) -> list[tuple[int, int, T]]:
+    ...
 
 
 @overload
@@ -300,7 +324,8 @@ def finder(
     *,
     key: Optional[Callable[[T], str]] = ...,
     raw: Literal[False],
-) -> list[T]: ...
+) -> list[T]:
+    ...
 
 
 @overload
@@ -310,7 +335,8 @@ def finder(
     *,
     key: Optional[Callable[[T], str]] = ...,
     raw: bool = ...,
-) -> list[T]: ...
+) -> list[T]:
+    ...
 
 
 def finder(
@@ -341,7 +367,12 @@ def finder(
         return [z for _, _, z in sorted(suggestions, key=sort_key)]
 
 
-def find(text: str, collection: Iterable[str], *, key: Optional[Callable[[str], str]] = None) -> Optional[str]:
+def find(
+    text: str,
+    collection: Iterable[T],
+    *,
+    key: Optional[Callable[[T], str]] = None,
+) -> Optional[T]:
     try:
         return finder(text, collection, key=key)[0]
     except IndexError:

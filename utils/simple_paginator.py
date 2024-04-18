@@ -44,7 +44,11 @@ class SimplePaginator(View):
 
         # only show stop button if there is only 1 page.
         if len(self.pages) <= 1:
-            return [item for item in org_children if item.callback.callback.__name__ == "stop_button"]
+            return [
+                item
+                for item in org_children
+                if item.callback.callback.__name__ == "stop_button"
+            ]
         return org_children
 
     def format_page(self, page: ValidPage) -> ValidPage:
@@ -88,7 +92,10 @@ class SimplePaginator(View):
                 self.message = interaction.message
 
     async def start(
-        self, ctx: Optional[Context] = None, interaction: Optional[Interaction] = None, **kwargs
+        self,
+        ctx: Optional[Context] = None,
+        interaction: Optional[Interaction] = None,
+        **kwargs,
     ) -> Optional[PossibleMessage]:
         kwargs = await self.get_page_kwargs(self.current_page)
         if self.message:

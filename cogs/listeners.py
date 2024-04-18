@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING
 
+from discord import Guild
 from discord.ext import commands
 
 if TYPE_CHECKING:
@@ -21,11 +22,11 @@ class Events(commands.Cog):
         )
 
     @commands.Cog.listener()
-    async def on_guild_available(self, guild) -> None:
+    async def on_guild_available(self, guild: Guild) -> None:
         print(f"Guild {guild.name} (ID: {guild.id}) is available")
 
     @commands.Cog.listener()
-    async def on_guild_unavailable(self, guild) -> None:
+    async def on_guild_unavailable(self, guild: Guild) -> None:
         print(f"Guild {guild.name} (ID: {guild.id}) is unavailable")
 
 
