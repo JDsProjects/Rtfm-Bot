@@ -51,14 +51,13 @@ class DevTools(commands.Cog):
             message_reference = reference(ctx.message)
             await ctx.send(embed=embed, reference=message_reference)
 
-
     @commands.command(
         aliases=["rtd", "rtfs", "rtdm"],
         invoke_without_command=True,
         brief="a rtfm command that allows you to lookup at any library we support looking up(using selects)",
     )
     async def rtfm(self, ctx, *, args=None):
-        
+
         libraries = [utils.RtfmObject(name, url) for (name, url) in self.bot.rtfm_libraries.items()]
 
         view = utils.RtfmChoice(ctx, libraries, timeout=15.0)

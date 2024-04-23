@@ -66,11 +66,8 @@ class RTFMSlash(commands.Cog):
         print(error)
         print(interaction.command)
 
-    
     @app_commands.command(description="looks up docs from discord developer docs", name="docs")
-    async def docs(
-        self, interaction: discord.Interaction, query: typing.Optional[str] = None
-    ) -> None:
+    async def docs(self, interaction: discord.Interaction, query: typing.Optional[str] = None) -> None:
         """Looks up docs from discord developer docs with optionally a query."""
 
         url = "https://discord.com/developers/docs/"
@@ -85,7 +82,9 @@ class RTFMSlash(commands.Cog):
 
         url = "https://discord.com/developers/docs/"
 
-        unfiltered_results = await utils.algolia_lookup(self.bot, os.environ["ALGOLIA_APP_ID"], os.environ["ALGOLIA_API_KEY"], "discord", current)
+        unfiltered_results = await utils.algolia_lookup(
+            self.bot, os.environ["ALGOLIA_APP_ID"], os.environ["ALGOLIA_API_KEY"], "discord", current
+        )
         # use new method to handle results from discord ologia, but fuzzy can be used now
         # I will remove the starting discord api docs if necessary.
 
@@ -102,7 +101,7 @@ class RTFMSlash(commands.Cog):
             if len(result.value) > 100:
                 print(result.value)
 
-         # seems to have issues with some sizes.
+        # seems to have issues with some sizes.
 
         if not results:
             result = utils.RtfmObject("Getting Started", "https://discord.com/developers/docs/")
@@ -115,6 +114,7 @@ class RTFMSlash(commands.Cog):
         await interaction.response.send_message(f"{error}! Please Send to this to my developer", ephemeral=True)
         print(error)
         print(interaction.command)
+
 
 async def setup(bot: RTFMBot) -> None:
     await bot.add_cog(RTFMSlash(bot))

@@ -1,8 +1,11 @@
 import discord
 
+
 class RtfmSelects(discord.ui.Select):
     def __init__(self, options, *args, **kwargs):
-        super().__init__(placeholder="Chose a library to lookup from.", min_values=1, max_values=1, options=options, *args, **kwargs)
+        super().__init__(
+            placeholder="Chose a library to lookup from.", min_values=1, max_values=1, options=options, *args, **kwargs
+        )
 
     async def callback(self, interaction: discord.Interaction):
         self.view.value = self.values[0]
@@ -17,17 +20,12 @@ class RtfmChoice(discord.ui.View):
 
         libraries2 = libraries[25:]
         libraries = libraries[:25]
-        
 
         self.value = [o.url for o in libraries][0]
         self.ctx = ctx
 
-        self.add_item(
-            RtfmSelects([discord.SelectOption(label=o.name, value=o.url, emoji="🔍") for o in libraries])
-        )
-        self.add_item(
-            RtfmSelects([discord.SelectOption(label=o.name, value=o.url, emoji="🔍") for o in libraries2])
-        )
+        self.add_item(RtfmSelects([discord.SelectOption(label=o.name, value=o.url, emoji="🔍") for o in libraries]))
+        self.add_item(RtfmSelects([discord.SelectOption(label=o.name, value=o.url, emoji="🔍") for o in libraries2]))
 
     async def interaction_check(self, interaction: discord.Interaction):
         if self.ctx.author.id != interaction.user.id:
