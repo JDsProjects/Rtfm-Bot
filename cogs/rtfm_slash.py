@@ -32,7 +32,7 @@ class LibraryTransformer(Transformer):
 class QueryTransformer(Transformer):
     async def transform(self, interaction: Interaction[RTFMBot], value: str) -> RtfmObject:
         library = interaction.client.rtfm_libraries.get(interaction.namespace.library, interaction.namespace.library)
-        library = library or self.interaction.client.rtfm_libraries["master"]
+        library = library or interaction.client.rtfm_libraries["master"]
         unfiltered_results = await utils.rtfm(interaction.client, library)
         if item := fuzzy.find(value, unfiltered_results, key=lambda t: t.name):
             return item
@@ -41,7 +41,7 @@ class QueryTransformer(Transformer):
 
     async def autocomplete(self, interaction: Interaction[RTFMBot], current: str) -> list[Choice]:
         library = interaction.client.rtfm_libraries.get(interaction.namespace.library, interaction.namespace.library)
-        library = library or self.interaction.client.rtfm_libraries["master"]
+        library = library or interaction.client.rtfm_libraries["master"]
         unfiltered_results = await utils.rtfm(interaction.client, library)
         choices = [
             Choice(name=result.name, value=result.name)
