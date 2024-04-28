@@ -46,7 +46,7 @@ async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
         
         if not response.ok:
 
-            results[RtfmObject("Blocked Url", url)]
+            results = [RtfmObject("Blocked Url", url)]
             # quick fix.
 
             return results
@@ -104,7 +104,7 @@ async def algolia_lookup(bot: RTFMBot, app_id: str, app_key: str, index: str, qu
     ) as response:
         if not response.ok:
 
-            results[RtfmObject("Getting Started", "https://discord.com/developers/docs/")]
+            results = [RtfmObject("Getting Started", "https://discord.com/developers/docs/")]
             # quick fix.
 
             return results
