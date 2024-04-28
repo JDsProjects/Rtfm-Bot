@@ -130,7 +130,7 @@ class RTFMSlash(commands.Cog):
     @app_commands.command()
     @app_commands.user_install()
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
-    async def docs(self, interaction: Interaction[RTFMBot], query: DocsQuery):
+    async def docs(self, interaction: Interaction[RTFMBot], query: Optional[DocsQuery] = None):
         """Looks up docs from discord developer docs with optionally a query.
 
         Parameters
@@ -138,6 +138,10 @@ class RTFMSlash(commands.Cog):
         query : RtfmObject
             The query to search for.
         """
+
+        if not query:
+            return await interaction.response.send_message("https://discord.com/developers/docs/")
+        
         await interaction.response.send_message(f"Alright Let's see \n{query.url}")
 
     @docs.error
