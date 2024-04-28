@@ -43,6 +43,12 @@ class RtfmObject(NamedTuple):
 async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
 
     async with await bot.session.get(f"{url}objects.inv") as response:
+        
+        if not response.ok:
+
+            results[RtfmObject("Blocked Url", url)]
+            # quick fix.
+
         lines = (await response.read()).split(b"\n")
 
     first_10_lines = lines[:10]
