@@ -106,7 +106,7 @@ class RTFMSlash(commands.Cog):
     async def rtfm_slash(
         self,
         interaction: Interaction[RTFMBot],
-        library: Library,
+        library: Optional[Library],
         query: Optional[Query],
     ) -> None:
         """Looks up docs for a library with optionally a query.
