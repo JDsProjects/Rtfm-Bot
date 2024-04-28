@@ -49,6 +49,8 @@ async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
             results[RtfmObject("Blocked Url", url)]
             # quick fix.
 
+            return results
+
         lines = (await response.read()).split(b"\n")
 
     first_10_lines = lines[:10]
