@@ -1,13 +1,13 @@
 from random import randint
 from typing import TYPE_CHECKING, Any, Optional, Union
 
+import discord
 from discord import AllowedMentions, Embed
 from discord.ext import commands
-import discord
 
-from utils.extra import RTFMEmbedPaginator, reference
 import utils
 from utils import fuzzy
+from utils.extra import RTFMEmbedPaginator, reference
 
 if TYPE_CHECKING:
     from discord.ext.commands import Context
@@ -51,14 +51,13 @@ class DevTools(commands.Cog):
             message_reference = reference(ctx.message)
             await ctx.send(embed=embed, reference=message_reference)
 
-
     @commands.command(
         aliases=["rtd", "rtfs", "rtdm"],
         invoke_without_command=True,
         brief="a rtfm command that allows you to lookup at any library we support looking up(using selects)",
     )
     async def rtfm(self, ctx, *, args=None):
-        
+
         libraries = [utils.RtfmObject(name, url) for (name, url) in self.bot.rtfm_libraries.items()]
 
         view = utils.RtfmChoice(ctx, libraries, timeout=15.0)

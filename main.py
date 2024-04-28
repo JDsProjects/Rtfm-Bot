@@ -25,7 +25,9 @@ if TYPE_CHECKING:
         name: str
         link: str
 
+
 from cogs import EXTENSIONS
+
 
 async def get_prefix(client: RTFMBot, message: Message) -> list[str]:
     extras: list[str] = ["rtfm*", "rm*", "r*"]
@@ -49,7 +51,7 @@ class RTFMBot(commands.Bot):
 
     async def setup_hook(self) -> None:
         # load extensions
-        
+
         for cog in EXTENSIONS:
             try:
                 await self.load_extension(f"{cog}")
@@ -67,8 +69,6 @@ class RTFMBot(commands.Bot):
         rtfm_libraries: list[Row[str]] = await result.fetchall()
         self.rtfm_libraries = dict(rtfm_libraries)  # type: ignore # this is supported.
 
-        
-
     async def close(self) -> None:
         if self.session and not self.session.closed:
             await self.session.close()
@@ -77,7 +77,10 @@ class RTFMBot(commands.Bot):
         await super().close()
 
 
-bot = RTFMBot(command_prefix=get_prefix, intents=Intents(messages=True, message_content=True, guilds=True))
+bot = RTFMBot(
+    command_prefix=get_prefix,
+    intents=Intents(messages=True, message_content=True, guilds=True),
+)
 
 
 @bot.event

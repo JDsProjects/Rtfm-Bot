@@ -96,7 +96,6 @@ Query = Transform[RtfmObject, QueryTransformer]
 DocsQuery = Transform[RtfmObject, DocsQueryTransformer]
 
 
-
 class RTFMSlash(commands.Cog):
     def __init__(self, bot: RTFMBot) -> None:
         self.bot = bot
@@ -104,7 +103,12 @@ class RTFMSlash(commands.Cog):
     @app_commands.command(name="rtfm")
     @app_commands.user_install()
     @app_commands.allow_contexts(guilds=True, dms=True, private_channels=True)
-    async def rtfm_slash(self, interaction: Interaction[RTFMBot], library: Library, query: Optional[Query]) -> None:
+    async def rtfm_slash(
+        self,
+        interaction: Interaction[RTFMBot],
+        library: Library,
+        query: Optional[Query],
+    ) -> None:
         """Looks up docs for a library with optionally a query.
 
         Parameters
@@ -156,6 +160,7 @@ class RTFMSlash(commands.Cog):
             )
         )
         await interaction.response.send_message("Source: https://github.com/JDsProjects/Rtfm-Bot", view=view)
+
 
 async def setup(bot: RTFMBot) -> None:
     await bot.add_cog(RTFMSlash(bot))

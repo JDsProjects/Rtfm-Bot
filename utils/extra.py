@@ -1,8 +1,9 @@
 from __future__ import annotations
+
 import json
-from random import randint
-from typing import TYPE_CHECKING, Any, Optional, NamedTuple
 import zlib
+from random import randint
+from typing import TYPE_CHECKING, Any, NamedTuple, Optional
 
 from discord import Embed, Message
 
@@ -10,6 +11,7 @@ from utils.simple_paginator import SimplePaginator
 
 if TYPE_CHECKING:
     from discord import MessageReference
+
     from ..main import RTFMBot
 else:
     MessageReference = Any
@@ -28,7 +30,8 @@ def reference(message) -> Optional[MessageReference]:
 class RTFMEmbedPaginator(SimplePaginator):
     def format_page(self, page: str) -> Embed:
         return Embed(title="Packages:", description=page, color=randint(0, 16777215))
-    
+
+
 class RtfmObject(NamedTuple):
     name: str
     url: str
@@ -36,8 +39,9 @@ class RtfmObject(NamedTuple):
     def __str__(self) -> str:
         return self.name
 
+
 async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
-    
+
     async with await bot.session.get(f"{url}objects.inv") as response:
         lines = (await response.read()).split(b"\n")
 
@@ -73,7 +77,7 @@ async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
 
 
 async def algolia_lookup(bot: RTFMBot, app_id: str, app_key: str, index: str, query: str):
-    
+
     results = []
 
     headers = {
@@ -85,10 +89,14 @@ async def algolia_lookup(bot: RTFMBot, app_id: str, app_key: str, index: str, qu
     # Construct complete JSON string
     data_string = json.dumps({"query": query})
 
-    async with await bot.session.post(f"https://{app_id}.algolia.net/1/indexes/{index}/query", data=data_string, headers=headers) as response:
+    async with await bot.session.post(
+        f"https://{app_id}.algolia.net/1/indexes/{index}/query",
+        data=data_string,
+        headers=headers,
+    ) as response:
         if not response.ok:
 
-            results [RtfmObject("Getting Started", "https://discord.com/developers/docs/")]
+            results[RtfmObject("Getting Started", "https://discord.com/developers/docs/")]
             # quick fix.
 
             return results
