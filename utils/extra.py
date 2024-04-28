@@ -58,7 +58,15 @@ async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
 
     lines = first_10_lines + lines[10:]
     joined_lines = b"\n".join(lines)
-    full_data = zlib.decompress(joined_lines)
+
+    try:
+        full_data = zlib.decompress(joined_lines)
+
+    except:
+        results = [RtfmObject("Getting Started", url)]
+        return results
+        # should fix invalid results
+
     normal_data = full_data.decode()
     new_list = normal_data.split("\n")
 
