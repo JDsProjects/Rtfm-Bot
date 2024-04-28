@@ -102,7 +102,7 @@ class RTFMSlash(commands.Cog):
 
     @app_commands.command(name="rtfm")
     @app_commands.user_install()
-    @app_commands.allow_contexts(guilds=True, dms=True, private_channels=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def rtfm_slash(
         self,
         interaction: Interaction[RTFMBot],
@@ -129,7 +129,7 @@ class RTFMSlash(commands.Cog):
 
     @app_commands.command()
     @app_commands.user_install()
-    @app_commands.allow_contexts(guilds=True, dms=True, private_channels=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def docs(self, interaction: Interaction[RTFMBot], query: DocsQuery):
         """Looks up docs from discord developer docs with optionally a query.
 
@@ -148,7 +148,7 @@ class RTFMSlash(commands.Cog):
 
     @app_commands.command()
     @app_commands.user_install()
-    @app_commands.allow_contexts(guilds=True, dms=True, private_channels=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def source(self, interaction: Interaction[RTFMBot]):
         """Sends link to the bot's source code"""
         view = discord.ui.View()
