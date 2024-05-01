@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 from typing import TYPE_CHECKING, Optional
 
+import discord
 from discord import app_commands
 from discord.app_commands import Choice, Transform, Transformer
 from discord.ext import commands
