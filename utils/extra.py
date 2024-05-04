@@ -73,7 +73,9 @@ async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
     results = []
     for x in new_list:
         try:
-            name, type, _, fragment, *label = x.split(" ")
+            name, python_type, number, fragment, *label = x.split(" ")
+            # fixes shadowing tested with print(name, type, _)
+            # ('discord.Activity.emoji', 'py:attribute', '1')
 
             text = " ".join(label)
 
