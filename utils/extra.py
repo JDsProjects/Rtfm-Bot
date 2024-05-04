@@ -91,6 +91,8 @@ async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
         fragment = fragment.replace("$", name)
         results.append(RtfmObject(label, url + fragment))
 
+    # results needs to get rid of duplicates at least duplicate urls.
+
     return results
 
 
