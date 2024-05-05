@@ -169,4 +169,3 @@ class RTFMSlash(commands.Cog):
 
 async def setup(bot: RTFMBot) -> None:
     await bot.add_cog(RTFMSlash(bot))
-    
