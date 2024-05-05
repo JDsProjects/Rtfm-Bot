@@ -128,4 +128,3 @@ async def algolia_lookup(bot: RTFMBot, app_id: str, app_key: str, index: str, qu
             results.append(RtfmObject(value["anchor"], value["url"]))
 
         return results
-      
