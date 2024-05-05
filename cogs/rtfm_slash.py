@@ -142,7 +142,7 @@ class RTFMSlash(commands.Cog):
 
         if not query:
             return await interaction.response.send_message("https://discord.com/developers/docs/")
-        
+
         await interaction.response.send_message(f"Alright Let's see \n{query.url}")
 
     @docs.error
