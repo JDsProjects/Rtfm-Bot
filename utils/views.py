@@ -29,8 +29,8 @@ class RtfmChoice(discord.ui.View):
         self.value = [o.url for o in libraries][0]
         self.ctx = ctx
 
-        self.add_item(RtfmSelects([discord.SelectOption(label=o.name, value=o.url, emoji="🔍") for o in libraries]))
-        self.add_item(RtfmSelects([discord.SelectOption(label=o.name, value=o.url, emoji="🔍") for o in libraries2]))
+        self.add_item(RtfmSelects([discord.SelectOption(label=o.name, value=o.url, emoji=":mag:") for o in libraries]))
+        self.add_item(RtfmSelects([discord.SelectOption(label=o.name, value=o.url, emoji=":mag:") for o in libraries2]))
 
     async def interaction_check(self, interaction: discord.Interaction):
         if self.ctx.author.id != interaction.user.id:
@@ -46,3 +46,4 @@ class RtfmChoice(discord.ui.View):
             item.disabled = True
 
         await self.message.edit(content="Here's the default...", view=self)
+        
