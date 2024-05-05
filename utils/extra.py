@@ -1,8 +1,9 @@
 from __future__ import annotations
+
 import json
-from random import randint
-from typing import TYPE_CHECKING, Any, Optional, NamedTuple
 import zlib
+from random import randint
+from typing import TYPE_CHECKING, Any, NamedTuple, Optional
 
 from discord import Embed, Message
 
@@ -10,6 +11,7 @@ from utils.simple_paginator import SimplePaginator
 
 if TYPE_CHECKING:
     from discord import MessageReference
+
     from ..main import RTFMBot
 else:
     MessageReference = Any
@@ -41,6 +43,14 @@ class RtfmObject(NamedTuple):
 async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
 
     async with await bot.session.get(f"{url}objects.inv") as response:
+        
+        if not response.ok:
+
+            results = [RtfmObject("Blocked Url", url)]
+            # quick fix.
+
+            return results
+
         lines = (await response.read()).split(b"\n")
 
     first_10_lines = lines[:10]
@@ -48,14 +58,24 @@ async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
 
     lines = first_10_lines + lines[10:]
     joined_lines = b"\n".join(lines)
-    full_data = zlib.decompress(joined_lines)
+
+    try:
+        full_data = zlib.decompress(joined_lines)
+
+    except:
+        results = [RtfmObject("Getting Started", url)]
+        return results
+        # should fix invalid results
+
     normal_data = full_data.decode()
     new_list = normal_data.split("\n")
 
     results = []
     for x in new_list:
         try:
-            name, type, _, fragment, *label = x.split(" ")
+            name, python_type, number, fragment, *label = x.split(" ")
+            # fixes shadowing tested with print(name, type, _)
+            # ('discord.Activity.emoji', 'py:attribute', '1')
 
             text = " ".join(label)
 
@@ -70,6 +90,8 @@ async def rtfm(bot: RTFMBot, url: str) -> list[RtfmObject]:
 
         fragment = fragment.replace("$", name)
         results.append(RtfmObject(label, url + fragment))
+
+    # results needs to get rid of duplicates at least duplicate urls.
 
     return results
 
@@ -88,11 +110,13 @@ async def algolia_lookup(bot: RTFMBot, app_id: str, app_key: str, index: str, qu
     data_string = json.dumps({"query": query})
 
     async with await bot.session.post(
-        f"https://{app_id}.algolia.net/1/indexes/{index}/query", data=data_string, headers=headers
+        f"https://{app_id}.algolia.net/1/indexes/{index}/query",
+        data=data_string,
+        headers=headers,
     ) as response:
         if not response.ok:
 
-            results[RtfmObject("Getting Started", "https://discord.com/developers/docs/")]
+            results = [RtfmObject("Getting Started", "https://discord.com/developers/docs/")]
             # quick fix.
 
             return results

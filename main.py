@@ -77,7 +77,10 @@ class RTFMBot(commands.Bot):
         await super().close()
 
 
-bot = RTFMBot(command_prefix=get_prefix, intents=Intents(messages=True, message_content=True, guilds=True))
+bot = RTFMBot(
+    command_prefix=get_prefix,
+    intents=Intents(messages=True, message_content=True, guilds=True),
+)
 
 
 @bot.event

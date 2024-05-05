@@ -1,13 +1,13 @@
 from random import randint
 from typing import TYPE_CHECKING, Any, Optional, Union
 
+import discord
 from discord import AllowedMentions, Embed
 from discord.ext import commands
-import discord
 
-from utils.extra import RTFMEmbedPaginator, reference
 import utils
 from utils import fuzzy
+from utils.extra import RTFMEmbedPaginator, reference
 
 if TYPE_CHECKING:
     from discord.ext.commands import Context

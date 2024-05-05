@@ -17,7 +17,16 @@ from __future__ import annotations
 import heapq
 import re
 from difflib import SequenceMatcher
-from typing import Callable, Generator, Iterable, Literal, Optional, Sequence, TypeVar, overload
+from typing import (
+    Callable,
+    Generator,
+    Iterable,
+    Literal,
+    Optional,
+    Sequence,
+    TypeVar,
+    overload,
+)
 
 T = TypeVar("T")
 

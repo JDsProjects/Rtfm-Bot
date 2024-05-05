@@ -88,7 +88,10 @@ class SimplePaginator(View):
                 self.message = interaction.message
 
     async def start(
-        self, ctx: Optional[Context] = None, interaction: Optional[Interaction] = None, **kwargs
+        self,
+        ctx: Optional[Context] = None,
+        interaction: Optional[Interaction] = None,
+        **kwargs,
     ) -> Optional[PossibleMessage]:
         kwargs = await self.get_page_kwargs(self.current_page)
         if self.message:

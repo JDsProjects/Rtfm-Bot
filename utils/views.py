@@ -4,7 +4,12 @@ import discord
 class RtfmSelects(discord.ui.Select):
     def __init__(self, options, *args, **kwargs):
         super().__init__(
-            placeholder="Chose a library to lookup from.", min_values=1, max_values=1, options=options, *args, **kwargs
+            placeholder="Chose a library to lookup from.",
+            min_values=1,
+            max_values=1,
+            options=options,
+            *args,
+            **kwargs,
         )
 
     async def callback(self, interaction: discord.Interaction):
