@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "rtfm-bot"
+version = "0.1.0"
+description = ""
+authors = ["JDBot <jdjgbot@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">3.11"
+jishaku = {git = "https://github.com/Gorialis/jishaku.git"}
+asqlite = {git = "https://github.com/Rapptz/asqlite/"}
+
+[tool.poetry.group.dev.dependencies]
+discord-py = {git = "https://github.com/Rapptz/discord.py"}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
